@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "34516377367",
+    "project_id": "streamed-chat",
+    "storage_bucket": "streamed-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:34516377367:android:29fa5dd769abb61444a152",
+        "android_client_info": {
+          "package_name": "com.example.chat_by_socket_samle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBORWlElj1q4IKc5cR42aPXsJXHy96GKn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
