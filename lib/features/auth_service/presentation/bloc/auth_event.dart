@@ -4,9 +4,9 @@ part of 'auth_bloc.dart';
 sealed class AuthEvent {}
 
 class AuthCheckEvent extends AuthEvent {
-  final FirebaseAuth auth;
+  final String? userId;
 
-  AuthCheckEvent(this.auth);
+  AuthCheckEvent(this.userId);
 }
 
 class AuthenticationWithEmailAndPasswordEvent extends AuthEvent {
@@ -24,7 +24,7 @@ class SignUpWithEmailAndPasswordEvent extends AuthEvent {
 }
 
 class SignOutEvent extends AuthEvent {
-  final FirebaseAuth auth;
+  final String userId;
 
-  SignOutEvent(this.auth);
+  SignOutEvent(this.userId);
 }

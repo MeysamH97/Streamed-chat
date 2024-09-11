@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
     this.horizontalSpace,
     this.verticalSpace,
     this.isActive = true,
-    this.isLoading = false,
+    this.isLoading = false, this.color, this.textColor,
   });
 
   final String? text;
@@ -21,11 +21,13 @@ class CustomButton extends StatelessWidget {
   final double? verticalSpace;
   final bool isActive;
   final bool isLoading;
+  final Color? color;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: isActive ? onTap : null,
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: horizontalSpace != null
@@ -46,8 +48,8 @@ class CustomButton extends StatelessWidget {
                 : CustomSize(context).verticalSpaceLevel5(),
           ),
           decoration: BoxDecoration(
-            color: isActive!
-                ? Theme.of(context).colorScheme.tertiary
+            color: isActive
+                ? color ?? Theme.of(context).colorScheme.tertiary
                 : Theme.of(context)
                     .colorScheme
                     .surface, // Change color when disabled
@@ -58,8 +60,8 @@ class CustomButton extends StatelessWidget {
               text ?? '',
               style: TextStyle(
                 fontSize: CustomSize(context).textLevel6(),
-                color: isActive!
-                    ? Theme.of(context).colorScheme.inversePrimary
+                color: isActive
+                    ? textColor ?? Theme.of(context).colorScheme.inversePrimary
                     : Theme.of(context).colorScheme.secondary,
               ),
             ),

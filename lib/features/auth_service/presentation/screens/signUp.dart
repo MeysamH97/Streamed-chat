@@ -143,6 +143,7 @@ class SignUpPage extends StatelessWidget {
   }
 
   signUp(context) {
+    print('Start sign up');
     BlocProvider.of<AuthBloc>(context).add(
       SignUpWithEmailAndPasswordEvent(
         emailController.text,

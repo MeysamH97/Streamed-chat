@@ -1,6 +1,5 @@
-import 'package:chat_by_socket_samle/core/resources/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/resources/data_state.dart';
 import '../../domain/entities/user_entity.dart';
@@ -9,49 +8,50 @@ import '../data_source/remote/auth_service_provider.dart';
 import '../models/user_model.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  final FirebaseFirestore fireStore = FirebaseFirestore.instance;
   final AuthServiceProvider authServiceProvider;
 
   AuthRepositoryImpl(this.authServiceProvider);
 
   @override
-  Future<DataState<UserModelEntity>> fetchCurrentUserData(FirebaseAuth auth) async {
+  Future<DataState<UserModelEntity>> fetchCurrentUserData(String userId) async {
     try {
-      User? currentUser = auth.currentUser;
+      String token = await _getToken() ?? '';
+      Response response = await authServiceProvider.checkToken(userId, token);
 
-      if (currentUser == null) {
-        return DataFailed('No user found.');
+      if (response.data == null) {
+        return DataFailed('Please check your connection');
       }
 
-      DocumentSnapshot docSnapshot = await Constants.userRef.doc(currentUser.uid).get();
-      if (!docSnapshot.exists) {
-        return DataFailed('User data not found.');
+      if (response.data['error'] != null) {
+        return DataFailed('error: ${response.data['error']}');
       }
 
-      Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
-      UserModelEntity currentUserData = UserModel.fromJson(data).toEntity();
+      Response newResponse =
+          await authServiceProvider.getUserData(userId, token);
+      UserModelEntity currentUserData =
+          UserModel.fromJson(newResponse.data).toEntity();
 
       return DataSuccess(currentUserData);
-
     } catch (e) {
       return DataFailed('Error: ${e.toString()}');
     }
   }
 
   @override
-  Future<DataState<UserModelEntity>> fetchUserDataWithSignIn(String email, String password) async {
+  Future<DataState<UserModelEntity>> fetchUserDataWithSignIn(
+      String email, String password) async {
     try {
-      User? currentUser = await authServiceProvider.signInWithEmailAndPassword(email, password);
+      Response response =
+          await authServiceProvider.signInWithEmailAndPassword(email, password);
 
-      if (currentUser != null) {
-        DocumentSnapshot docSnapshot = await Constants.userRef.doc(currentUser.uid).get();
-        if (!docSnapshot.exists) {
-          return DataFailed('User data not found.');
+      if (response.data != null) {
+        UserModelEntity currentUserData =
+            UserModel.fromJson(response.data['data']).toEntity();
+
+        final token = response.data['token'];
+        if (token != null) {
+          await saveLoginData(currentUserData.id, token); // ذخیره توکن
         }
-
-        Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
-        UserModelEntity currentUserData = UserModel.fromJson(data).toEntity();
 
         return DataSuccess(currentUserData);
       } else {
@@ -63,39 +63,60 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<DataState<UserModelEntity>> fetchUserDataWithSignUp(String email, String password) async {
+  Future<DataState<UserModelEntity>> fetchUserDataWithSignUp(
+      String email, String password) async {
     try {
-      User? currentUser = await authServiceProvider.signUpWithEmailAndPassword(email, password);
-      if (currentUser != null) {
-        UserModel _newUserData = UserModel(
-          id: currentUser.uid,
-          username: '',
-          email: currentUser.email ?? '',
-          password: password,
-          profilePictureUrl: '',
-          contacts: [],
-          blockedUsers: [],
-          isOnline: true,
-        );
-        await Constants.userRef.doc(currentUser.uid).set(_newUserData.toJson());
-        UserModelEntity newUserData = _newUserData.toEntity();
-
+      print('Send request for user data');
+      Response response =
+          await authServiceProvider.signUpWithEmailAndPassword(email, password);
+      print('back request for user data');
+      if (response.data != null) {
+        UserModelEntity newUserData =
+            UserModel.fromJson(response.data['data']).toEntity();
+        print('preparing user data');
         return DataSuccess(newUserData);
       } else {
+        print('null data returned');
         return DataFailed('User creation failed.');
+      }
+    } catch (e) {
+      print('Error : ${e.toString()}');
+      return DataFailed('Error: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<DataState<String>> signOut(String userId) async {
+    try {
+      Response response = await authServiceProvider.signOut(userId);
+      if (response.data != null) {
+        await removeLoginData();
+        return DataSuccess(response.data['message']);
+      } else {
+        return DataFailed('Sign Out failed.');
       }
     } catch (e) {
       return DataFailed('Error: ${e.toString()}');
     }
   }
 
-  @override
-  Future<DataState<UserModelEntity>> signOut(FirebaseAuth auth) async {
-    try {
-     await authServiceProvider.signOut(auth);
-        return DataSuccess(null);
-    } catch (e) {
-      return DataFailed('Error: ${e.toString()}');
-    }
+  // ذخیره توکن در SharedPreferences
+  Future<void> saveLoginData(String userId, String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userId', userId);
+    await prefs.setString('auth_token', token);
+  }
+
+  // بازیابی توکن از SharedPreferences
+  Future<String?> _getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('auth_token');
+  }
+
+  // حذف توکن از SharedPreferences
+  Future<void> removeLoginData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userId');
+    await prefs.remove('auth_token');
   }
 }

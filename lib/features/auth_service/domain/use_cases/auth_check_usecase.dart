@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../core/resources/data_state.dart';
 
-class AuthCheckUseCase extends UseCase<DataState<UserModelEntity>,FirebaseAuth >{
+class AuthCheckUseCase extends UseCase<DataState<UserModelEntity>,String >{
   final AuthRepository authRepository;
 
   AuthCheckUseCase(this.authRepository);

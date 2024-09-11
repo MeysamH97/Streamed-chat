@@ -4,7 +4,7 @@ import '../../../../core/resources/data_state.dart';
 import '../entities/user_entity.dart';
 import '../repository/auth_repository.dart';
 
-class SignInWithEmailAndPasswordUseCase extends UseCase<DataState<UserModelEntity>,Map >{
+class SignInWithEmailAndPasswordUseCase extends UseCase<DataState<UserModelEntity>,Map<String,dynamic> >{
 
   final AuthRepository authRepository;
   SignInWithEmailAndPasswordUseCase(this.authRepository);
