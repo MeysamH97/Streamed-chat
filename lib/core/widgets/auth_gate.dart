@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/auth_service/presentation/bloc/auth_bloc.dart';
 import '../../features/auth_service/presentation/bloc/auth_status.dart';
 import '../../features/auth_service/presentation/bloc/signUp_cubit.dart';
-import '../../features/home/presentation/bloc/home_bloc.dart';
+import '../../features/home/presentation/bloc/home_bloc/home_bloc.dart';
 import '../../features/home/presentation/screens/home.dart';
 import '../pages_routs/loginOrSignUp.dart';
 import '../resources/custom_sizes.dart';

@@ -1,29 +1,62 @@
-import 'package:chat_by_socket_samle/features/chat/domain/entities/chat_model_entity.dart';
 import 'package:equatable/equatable.dart';
+import 'package:chat_by_socket_samle/features/chat/domain/entities/chat_model_entity.dart';
 
-import '../../data/models/user_model.dart';
-
-class UserModelEntity extends Equatable {
+// کلاس والد شامل اطلاعات پایه کاربر
+abstract class UserModelEntity extends Equatable {
   final String id;
-  final String? username;
   final String email;
-  final String password;
+  final String? username;
   final String? profilePictureUrl;
-  final List<UserModel>? contacts;
-  final List<UserModel>? blockedUsers;
-  final List<ChatModelEntity>? chats;
   final bool isOnline;
 
   const UserModelEntity({
     required this.id,
-    this.username,
     required this.email,
-    required this.password,
+    this.username,
     this.profilePictureUrl,
+    required this.isOnline,
+  });
+
+  List<Object?> get props => [id, email, username, profilePictureUrl, isOnline];
+}
+
+// کلاس شامل اطلاعات پایه برای نمایش مخاطبین یا کاربران دیگر
+class OtherUserEntity extends UserModelEntity {
+  const OtherUserEntity({
+    required super.id,
+    required super.email,
+    super.username,
+    super.profilePictureUrl,
+    required super.isOnline,
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    username,
+    email,
+    profilePictureUrl,
+    isOnline
+  ];
+}
+
+// کلاس شامل اطلاعات کامل برای کاربر جاری
+class CurrentUserEntity extends UserModelEntity {
+  final String password;
+  final List<OtherUserEntity>? contacts;
+  final List<OtherUserEntity>? blockedUsers;
+  final List<ChatModelEntity>? chats;
+
+  const CurrentUserEntity({
+    required super.id,
+    required super.email,
+    super.username,
+    super.profilePictureUrl,
+    required super.isOnline,
+    required this.password,
     this.contacts = const [],
     this.blockedUsers = const [],
     this.chats = const [],
-    this.isOnline = true,
   });
 
   @override
@@ -35,6 +68,7 @@ class UserModelEntity extends Equatable {
         profilePictureUrl,
         contacts,
         blockedUsers,
+        chats,
         isOnline
       ];
 }

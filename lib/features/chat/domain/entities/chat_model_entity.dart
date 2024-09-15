@@ -8,20 +8,20 @@ class ChatModelEntity extends Equatable {
   final String id;
   final String title;
   final String? pictureUrl;
-  final String owner;
-  final List<String> admins;
-  final List<UserModelEntity> members;
+  final String ownerId;
+  final List<OtherUserEntity> admins;
+  final List<OtherUserEntity>? members;
   final List<MessageModelEntity>? messages;
-  final List<UserModelEntity>? isTyping;
+  final List<OtherUserEntity>? isTyping;
   final ChatType type;
 
   const ChatModelEntity({
     required this.id,
     required this.title,
     this.pictureUrl,
-    required this.owner,
+    required this.ownerId,
     required this.admins,
-    required this.members,
+    this.members,
     this.messages,
     this.isTyping,
     required this.type,
@@ -30,7 +30,7 @@ class ChatModelEntity extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        owner,
+        ownerId,
         admins,
         members,
         messages,

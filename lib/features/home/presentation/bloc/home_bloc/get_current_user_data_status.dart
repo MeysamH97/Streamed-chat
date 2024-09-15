@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import '../../../auth_service/domain/entities/user_model_entity.dart';
+import '../../../../auth_service/domain/entities/user_model_entity.dart';
 
 @immutable
 abstract class GetCurrentUserDataStatus extends Equatable{

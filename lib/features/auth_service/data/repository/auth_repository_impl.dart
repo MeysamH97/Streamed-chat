@@ -1,11 +1,11 @@
+import 'package:chat_by_socket_samle/features/auth_service/data/models/current_user_model.dart';
+import 'package:chat_by_socket_samle/features/auth_service/data/models/medel_converter.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../core/resources/data_state.dart';
 import '../../domain/entities/user_model_entity.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../data_source/remote/auth_service_provider.dart';
-import '../models/user_model.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final AuthServiceProvider authServiceProvider;
@@ -28,8 +28,8 @@ class AuthRepositoryImpl extends AuthRepository {
 
       Response newResponse =
           await authServiceProvider.getUserData(userId, token);
-      UserModelEntity currentUserData =
-          UserModel.fromJson(newResponse.data).toEntity();
+      CurrentUserEntity currentUserData = await currentUserToEntity(
+          CurrentUserModel.fromJson(newResponse.data));
 
       return DataSuccess(currentUserData);
     } catch (e) {
@@ -45,8 +45,8 @@ class AuthRepositoryImpl extends AuthRepository {
           await authServiceProvider.signInWithEmailAndPassword(email, password);
 
       if (response.data != null) {
-        UserModelEntity currentUserData =
-            UserModel.fromJson(response.data['data']).toEntity();
+        CurrentUserEntity currentUserData = await currentUserToEntity(
+            CurrentUserModel.fromJson(response.data['data']));
 
         final token = response.data['token'];
         if (token != null) {
@@ -71,8 +71,8 @@ class AuthRepositoryImpl extends AuthRepository {
           await authServiceProvider.signUpWithEmailAndPassword(email, password);
       print('back request for user data');
       if (response.data != null) {
-        UserModelEntity newUserData =
-            UserModel.fromJson(response.data['data']).toEntity();
+        CurrentUserEntity newUserData = await currentUserToEntity(
+            CurrentUserModel.fromJson(response.data['data']));
         print('preparing user data');
         return DataSuccess(newUserData);
       } else {
@@ -81,21 +81,6 @@ class AuthRepositoryImpl extends AuthRepository {
       }
     } catch (e) {
       print('Error : ${e.toString()}');
-      return DataFailed('Error: ${e.toString()}');
-    }
-  }
-
-  @override
-  Future<DataState<String>> signOut(String userId) async {
-    try {
-      Response response = await authServiceProvider.signOut(userId);
-      if (response.data != null) {
-        await removeLoginData();
-        return DataSuccess(response.data['message']);
-      } else {
-        return DataFailed('Sign Out failed.');
-      }
-    } catch (e) {
       return DataFailed('Error: ${e.toString()}');
     }
   }
@@ -111,12 +96,5 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<String?> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('auth_token');
-  }
-
-  // حذف توکن از SharedPreferences
-  Future<void> removeLoginData() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('userId');
-    await prefs.remove('auth_token');
   }
 }

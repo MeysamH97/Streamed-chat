@@ -2,71 +2,30 @@ import 'package:dio/dio.dart';
 import '../../../../../core/resources/api_service.dart';
 
 class AuthServiceProvider {
-  final ApiService _apiService = ApiService();
+  final ApiServiceProvider apiServiceProvider = ApiServiceProvider();
 
 // Function to get user data by userId
   Future<Response> getUserData(String userId, String token) async {
     try {
-      final response = await _apiService.dio.get(
-        '/getUser/$userId',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token', // ارسال توکن در هدر
-          },
-        ),
-      );
-      return response; // بازگرداندن داده‌ها
+      return  await apiServiceProvider.getUserData(userId, token);
     } on DioException catch (e) {
       throw Exception(e.response?.data['error'] ?? e.message);
     }
   }
 
   // Sign in
-  Future<Response> signInWithEmailAndPassword(
-      String email, String password) async {
+  Future<Response> signInWithEmailAndPassword(String email, String password) async {
     try {
-      final response = await _apiService.dio.post(
-        '/login',
-        data: {
-          'email': email,
-          'password': password,
-        },
-      );
-      return response;
+      return apiServiceProvider.signInWithEmailAndPassword(email, password);
     } on DioException catch (e) {
       throw Exception(e.response?.data['error'] ?? e.message);
     }
   }
 
   // Sign up
-  Future<Response> signUpWithEmailAndPassword(
-      String email, String password) async {
+  Future<Response> signUpWithEmailAndPassword(String email, String password) async {
     try {
-      print('start api call');
-      final response = await _apiService.dio.post(
-        '/register',
-        data: {
-          'email': email,
-          'password': password,
-        },
-      );
-      print('sign up done');
-      return response;
-    } on DioException catch (e) {
-      throw Exception(e.response?.data['error'] ?? e.message);
-    }
-  }
-
-  // Sign out
-  Future<Response> signOut(String userId) async {
-    try {
-      final response = await _apiService.dio.post(
-        '/signout',
-        data: {
-          'userId': userId,
-        },
-      );
-      return response;
+      return apiServiceProvider.signUpWithEmailAndPassword(email, password);
     } on DioException catch (e) {
       throw Exception(e.response?.data['error'] ?? e.message);
     }
@@ -75,18 +34,15 @@ class AuthServiceProvider {
   // Function to check if the token is valid
   Future<Response> checkToken(String userId, String token ) async {
     try {
-      final response = await _apiService.dio.get(
-        '/checkToken',
-        data: {
-          'userId': userId,
-        },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token', // ارسال توکن در هدر
-          },
-        ),
-      );
-      return response;
+      return apiServiceProvider.checkToken(userId, token);
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['error'] ?? e.message);
+    }
+  }
+
+  Future<Response> getChatData(String chatId, String token) async {
+    try {
+      return  await apiServiceProvider.getChatData(chatId, token);
     } on DioException catch (e) {
       throw Exception(e.response?.data['error'] ?? e.message);
     }

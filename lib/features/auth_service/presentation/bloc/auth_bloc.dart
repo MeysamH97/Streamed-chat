@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../core/resources/data_state.dart';
-import '../../domain/use_cases/signOut_usecase.dart';
+import '../../../home/domain/use_cases/signOut_usecase.dart';
 import '../../domain/use_cases/signUpWithEmailAndPassword_usecase.dart';
 
 part 'auth_event.dart';

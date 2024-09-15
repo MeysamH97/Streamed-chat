@@ -1,6 +1,6 @@
-abstract class UseCase <T, P>{
+abstract class StreamUseCase <T, P>{
 
-  Future<T> call (P param);
+  Stream<T> call (P param);
 
 }
 class NoParams{}

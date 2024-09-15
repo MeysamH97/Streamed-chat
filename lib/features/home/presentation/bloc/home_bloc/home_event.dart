@@ -9,3 +9,4 @@ class GetCurrentUserDataEvent extends HomeEvent {
   GetCurrentUserDataEvent(this.userId);
 }
 
+

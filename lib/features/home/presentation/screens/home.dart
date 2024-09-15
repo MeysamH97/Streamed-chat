@@ -1,5 +1,5 @@
 import 'package:chat_by_socket_samle/features/auth_service/domain/entities/user_model_entity.dart';
-import 'package:chat_by_socket_samle/features/home/presentation/bloc/get_current_user_data_status.dart';
+import 'package:chat_by_socket_samle/features/home/presentation/bloc/home_bloc/get_current_user_data_status.dart';
 import 'package:chat_by_socket_samle/features/home/presentation/widgets/custom_drawer.dart';
 import 'package:chat_by_socket_samle/features/home/presentation/widgets/user_tile.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/resources/custom_sizes.dart';
 import '../../../../core/widgets/loading_widget.dart';
-import '../bloc/home_bloc.dart';
+import '../bloc/home_bloc/home_bloc.dart';
 import '../widgets/custom_app_bar.dart';
 import 'contacts.dart';
 
@@ -22,36 +22,26 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<UserModelEntity> users = [
-    UserModelEntity(
+    OtherUserEntity(
       id: '1',
       email: 'Reza',
-      password: '123456',
-      isOnline: true,
-      profilePictureUrl:
-          'https://w0.peakpx.com/wallpaper/459/353/HD-wallpaper-amazing-black-bollywood-hollywood-nature-pic-thumbnail.jpg',
-    ),
-    UserModelEntity(
+      isOnline: true,   ),
+    OtherUserEntity(
       id: '1',
       email: 'Hasan',
-      password: '123456',
       isOnline: false,
       profilePictureUrl:
           'https://www.springboard.com/blog/wp-content/uploads/2023/09/what-exactly-does-a-programmer-do.jpeg',
     ),
-    UserModelEntity(
+    OtherUserEntity(
       id: '1',
       email: 'Ali',
-      password: '123456',
       isOnline: true,
     ),
-    UserModelEntity(
+    OtherUserEntity(
       id: '1',
       email: 'Mohammad',
-      password: '123456',
-      isOnline: false,
-      profilePictureUrl:
-          'https://t3.ftcdn.net/jpg/07/25/01/68/360_F_725016819_jOXJkOJZqRSEkdKhheFsLkxuYq59iwa0.jpg',
-    ),
+      isOnline: false,    ),
   ];
   late GlobalKey<ScaffoldState> _scaffoldKey;
 
@@ -59,7 +49,6 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.currentUserId);
     BlocProvider.of<HomeBloc>(context)
         .add(GetCurrentUserDataEvent(widget.currentUserId));
     _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -71,6 +60,7 @@ class _HomeState extends State<Home> {
     final CustomSize size = CustomSize(context);
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
+
         if (state.getCurrentUserDataStatus is GetCurrentUserDataLoading) {
           return SafeArea(
             child: Scaffold(
@@ -108,36 +98,50 @@ class _HomeState extends State<Home> {
               state.getCurrentUserDataStatus as GetCurrentUserDataCompleted;
           UserModelEntity currentUser =
               getCurrentUserDataCompleted.userModelEntity;
+          print(currentUser.toString());
           return SafeArea(
             child: Scaffold(
               key: _scaffoldKey,
               drawer: CustomDrawer(context: context),
               appBar: CustomAppBar(
-                context: context,
-                titleText: 'My Chat App Name',
-                leading: InkWell(
-                  borderRadius: BorderRadius.circular(size.shapeLevel6()),
-                  onTap: () => _scaffoldKey.currentState?.openDrawer(),
-                  child: Icon(
-                    Icons.menu,
-                    size: size.shapeLevel6(),
-                    color: color.primary, // رنگ آیکن منو
+                  context: context,
+                  titleText: currentUser.username ?? '',
+                  leading: InkWell(
+                    borderRadius: BorderRadius.circular(size.shapeLevel6()),
+                    onTap: () => _scaffoldKey.currentState?.openDrawer(),
+                    child: Icon(
+                      Icons.menu,
+                      size: size.shapeLevel6(),
+                      color: color.primary, // رنگ آیکن منو
+                    ),
                   ),
-                ),
-                avatar: (currentUser.profilePictureUrl != null &&
-                        currentUser.profilePictureUrl != '')
-                    ? Image.network(
-                        currentUser.profilePictureUrl!,
-                        width: size.shapeLevel5() * 2,
-                        height: size.shapeLevel5() * 2,
-                        fit: BoxFit.fill,
-                      )
-                    : Icon(
-                        Icons.person,
-                        color: color.onPrimary,
-                        size: size.shapeLevel5(),
-                      ),
-              ),
+                  avatar: Stack(
+                    children: [
+                      (currentUser.profilePictureUrl != null &&
+                              currentUser.profilePictureUrl != '')
+                          ? Image.network(
+                              currentUser.profilePictureUrl!,
+                              width: size.shapeLevel5() * 2,
+                              height: size.shapeLevel5() * 2,
+                              fit: BoxFit.fill,
+                            )
+                          : Icon(
+                              Icons.person,
+                              color: color.onPrimary,
+                              size: size.shapeLevel5(),
+                            ),
+                      if (currentUser.isOnline) ...[
+                        Positioned(
+                          right: 10,
+                          bottom: 10,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.red,
+                            radius: CustomSize(context).shapeLevel7() / 3,
+                          ),
+                        )
+                      ],
+                    ],
+                  )),
               floatingActionButton: FloatingActionButton(
                 backgroundColor: color.primary,
                 shape: const CircleBorder(),

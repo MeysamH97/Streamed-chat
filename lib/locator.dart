@@ -1,27 +1,33 @@
 import 'package:chat_by_socket_samle/features/auth_service/data/data_source/remote/auth_service_provider.dart';
 import 'package:chat_by_socket_samle/features/auth_service/domain/use_cases/auth_check_usecase.dart';
 import 'package:chat_by_socket_samle/features/auth_service/domain/use_cases/signInWithEmailAndPassword_usecase.dart';
-import 'package:chat_by_socket_samle/features/auth_service/domain/use_cases/signOut_usecase.dart';
+import 'package:chat_by_socket_samle/features/chat/data/data_source/remote/chat_service_provider.dart';
+import 'package:chat_by_socket_samle/features/home/data/data_source/remote/home_service_provider.dart';
+import 'package:chat_by_socket_samle/features/home/domain/use_cases/signOut_usecase.dart';
 import 'package:chat_by_socket_samle/features/auth_service/presentation/bloc/auth_bloc.dart';
 import 'package:chat_by_socket_samle/features/auth_service/presentation/bloc/login_cubit.dart';
 import 'package:chat_by_socket_samle/features/auth_service/presentation/bloc/signUp_cubit.dart';
-import 'package:chat_by_socket_samle/features/home/data/data_source/remote/socket_provider.dart';
 import 'package:chat_by_socket_samle/features/home/domain/use_cases/get_current_user_data_use_case.dart';
 import 'package:get_it/get_it.dart';
 
+import 'core/resources/api_service.dart';
 import 'features/auth_service/data/repository/auth_repository_impl.dart';
 import 'features/auth_service/domain/repository/auth_repository.dart';
 import 'features/auth_service/domain/use_cases/signUpWithEmailAndPassword_usecase.dart';
 import 'features/home/data/repository/home_repository_impl.dart';
 import 'features/home/domain/repository/home_repository.dart';
-import 'features/home/presentation/bloc/home_bloc.dart';
+import 'features/home/presentation/bloc/home_bloc/home_bloc.dart';
 
 GetIt locator = GetIt.instance;
 
 setup() async {
   ///Api provider:
-  locator.registerSingleton<AuthServiceProvider>(AuthServiceProvider());
+  locator.registerSingleton<ApiService>(ApiService());
+  locator.registerSingleton<ApiServiceProvider>(ApiServiceProvider());
   locator.registerSingleton<SocketProvider>(SocketProvider());
+  locator.registerSingleton<AuthServiceProvider>(AuthServiceProvider());
+  locator.registerSingleton<HomeServiceProvider>(HomeServiceProvider());
+  locator.registerSingleton<ChatServiceProvider>(ChatServiceProvider());
 
   ///Repositories:
   locator.registerSingleton<AuthRepository>(AuthRepositoryImpl(locator()));

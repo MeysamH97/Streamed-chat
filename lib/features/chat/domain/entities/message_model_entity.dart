@@ -1,13 +1,12 @@
 
+import 'package:chat_by_socket_samle/features/auth_service/domain/entities/user_model_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-
-import '../../../auth_service/data/models/user_model.dart';
 import '../../data/models/message_model.dart';
 
 class MessageModelEntity extends Equatable {
   final String id;
-  final UserModel sender;
+  final OtherUserEntity sender;
   final String content;
   final Timestamp time;
   final MessageType type;

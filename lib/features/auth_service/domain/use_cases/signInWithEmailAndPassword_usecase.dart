@@ -1,10 +1,10 @@
-import 'package:chat_by_socket_samle/core/use_case/use_case.dart';
+import 'package:chat_by_socket_samle/core/use_case/future_use_case.dart';
 
 import '../../../../core/resources/data_state.dart';
 import '../entities/user_model_entity.dart';
 import '../repository/auth_repository.dart';
 
-class SignInWithEmailAndPasswordUseCase extends UseCase<DataState<UserModelEntity>,Map<String,dynamic> >{
+class SignInWithEmailAndPasswordUseCase extends FutureUseCase<DataState<UserModelEntity>,Map<String,dynamic> >{
 
   final AuthRepository authRepository;
   SignInWithEmailAndPasswordUseCase(this.authRepository);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/auth_service/presentation/screens/signIn.dart';
 import '../../features/auth_service/presentation/screens/signUp.dart';
-import '../../features/home/presentation/bloc/home_bloc.dart';
+import '../../features/home/presentation/bloc/home_bloc/home_bloc.dart';
 import '../../locator.dart';
 
 class LoginOrSignUp extends StatefulWidget {
