@@ -1,14 +1,15 @@
-import 'package:chat_by_socket_samle/features/auth_service/domain/entities/user_entity.dart';
+import 'package:chat_by_socket_samle/features/auth_service/domain/entities/user_model_entity.dart';
 import 'package:chat_by_socket_samle/features/home/presentation/bloc/get_current_user_data_status.dart';
 import 'package:chat_by_socket_samle/features/home/presentation/widgets/custom_drawer.dart';
 import 'package:chat_by_socket_samle/features/home/presentation/widgets/user_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../../../core/resources/custom_sizes.dart';
 import '../../../../core/widgets/loading_widget.dart';
 import '../bloc/home_bloc.dart';
+import '../widgets/custom_app_bar.dart';
+import 'contacts.dart';
 
 class Home extends StatefulWidget {
   final String currentUserId;
@@ -20,9 +21,39 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<UserModelEntity> users = [];
+  List<UserModelEntity> users = [
+    UserModelEntity(
+      id: '1',
+      email: 'Reza',
+      password: '123456',
+      isOnline: true,
+      profilePictureUrl:
+          'https://w0.peakpx.com/wallpaper/459/353/HD-wallpaper-amazing-black-bollywood-hollywood-nature-pic-thumbnail.jpg',
+    ),
+    UserModelEntity(
+      id: '1',
+      email: 'Hasan',
+      password: '123456',
+      isOnline: false,
+      profilePictureUrl:
+          'https://www.springboard.com/blog/wp-content/uploads/2023/09/what-exactly-does-a-programmer-do.jpeg',
+    ),
+    UserModelEntity(
+      id: '1',
+      email: 'Ali',
+      password: '123456',
+      isOnline: true,
+    ),
+    UserModelEntity(
+      id: '1',
+      email: 'Mohammad',
+      password: '123456',
+      isOnline: false,
+      profilePictureUrl:
+          'https://t3.ftcdn.net/jpg/07/25/01/68/360_F_725016819_jOXJkOJZqRSEkdKhheFsLkxuYq59iwa0.jpg',
+    ),
+  ];
   late GlobalKey<ScaffoldState> _scaffoldKey;
-
 
   @override
   void initState() {
@@ -31,7 +62,7 @@ class _HomeState extends State<Home> {
     print(widget.currentUserId);
     BlocProvider.of<HomeBloc>(context)
         .add(GetCurrentUserDataEvent(widget.currentUserId));
-   _scaffoldKey = GlobalKey<ScaffoldState>();
+    _scaffoldKey = GlobalKey<ScaffoldState>();
   }
 
   @override
@@ -41,62 +72,26 @@ class _HomeState extends State<Home> {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state.getCurrentUserDataStatus is GetCurrentUserDataLoading) {
-          print(widget.currentUserId);
           return SafeArea(
             child: Scaffold(
+              key: _scaffoldKey,
               drawer: CustomDrawer(context: context),
-              appBar: AppBar(
-                // تنظیم ارتفاع بیشتر برای AppBar
-                toolbarHeight: size.shapeLevel4(),
-                backgroundColor: Colors.transparent,
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        color.tertiary,
-                        color.tertiary.withOpacity(0.5),
-                        color.tertiary.withOpacity(0.25),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(15), // افکت خمیده در گوشه‌ها
-                      bottomRight: Radius.circular(15),
-                    ),
-                  ),
-                ),
+              appBar: CustomAppBar(
+                context: context,
+                titleText: 'Connecting ... ',
                 leading: InkWell(
                   borderRadius: BorderRadius.circular(size.shapeLevel6()),
-                  onTap: () => _scaffoldKey.currentState!.openDrawer(),
+                  onTap: () => _scaffoldKey.currentState?.openDrawer(),
                   child: Icon(
                     Icons.menu,
                     size: size.shapeLevel6(),
                     color: color.primary, // رنگ آیکن منو
                   ),
                 ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: color.primary,
-                      radius: size.shapeLevel6(),
-                      child: Icon(
-                        Icons.person,
-                        color: color.onPrimary,
-                        size: size.shapeLevel5(),
-                      ),
-                    ),
-                    SizedBox(width: size.horizontalSpaceLevel5()),
-                    Text(
-                      'Connecting ... ',
-                      style: TextStyle(
-                        fontSize: size.textLevel4() / 2,
-                        color: color.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                avatar: Icon(
+                  Icons.person,
+                  color: color.onPrimary,
+                  size: size.shapeLevel5(),
                 ),
               ),
               body: Center(
@@ -115,74 +110,46 @@ class _HomeState extends State<Home> {
               getCurrentUserDataCompleted.userModelEntity;
           return SafeArea(
             child: Scaffold(
-              key: _scaffoldKey, // استفاده از GlobalKey برای Scaffold
+              key: _scaffoldKey,
               drawer: CustomDrawer(context: context),
-              appBar: AppBar(
-                toolbarHeight: size.shapeLevel4(),
-                // تنظیم ارتفاع بیشتر برای AppBar
-                backgroundColor: Colors.transparent,
-                // ایجاد پس‌زمینه شفاف
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        color.tertiary,
-                        color.tertiary.withOpacity(0.5),
-                        color.tertiary.withOpacity(0.25),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(15), // افکت خمیده در گوشه‌ها
-                      bottomRight: Radius.circular(15),
-                    ),
-                  ),
-                ),
+              appBar: CustomAppBar(
+                context: context,
+                titleText: 'My Chat App Name',
                 leading: InkWell(
                   borderRadius: BorderRadius.circular(size.shapeLevel6()),
-                  onTap: () => _scaffoldKey.currentState!.openDrawer(),
+                  onTap: () => _scaffoldKey.currentState?.openDrawer(),
                   child: Icon(
                     Icons.menu,
                     size: size.shapeLevel6(),
                     color: color.primary, // رنگ آیکن منو
                   ),
                 ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: color.primary,
-                      radius: size.shapeLevel6(),
-                      child: (currentUser.profilePictureUrl != null &&
-                              currentUser.profilePictureUrl != '')
-                          ? ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(size.shapeLevel5()),
-                              child: Image.network(
-                                currentUser.profilePictureUrl!,
-                                width: size.shapeLevel5() * 2,
-                                height: size.shapeLevel5() * 2,
-                                fit: BoxFit.fill,
-                              ),
-                            )
-                          : Icon(
-                              Icons.person,
-                              color: color.onPrimary,
-                              size: size.shapeLevel5(),
-                            ),
-                    ),
-                    SizedBox(width: size.horizontalSpaceLevel5()),
-                    Text(
-                      'My Chat App Name',
-                      style: TextStyle(
-                        fontSize: size.textLevel4() / 2,
-                        color: color.primary,
-                        fontWeight: FontWeight.bold,
+                avatar: (currentUser.profilePictureUrl != null &&
+                        currentUser.profilePictureUrl != '')
+                    ? Image.network(
+                        currentUser.profilePictureUrl!,
+                        width: size.shapeLevel5() * 2,
+                        height: size.shapeLevel5() * 2,
+                        fit: BoxFit.fill,
+                      )
+                    : Icon(
+                        Icons.person,
+                        color: color.onPrimary,
+                        size: size.shapeLevel5(),
                       ),
-                    ),
-                  ],
-                ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                backgroundColor: color.primary,
+                shape: const CircleBorder(),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Contacts()),
+                  );
+                },
+                // آیکون کانتکت
+                tooltip: 'New Converstation',
+                child: const Icon(Icons.add),
               ),
               body: Column(
                 children: [
@@ -199,18 +166,24 @@ class _HomeState extends State<Home> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                              Icon(Icons.supervisor_account_outlined,size: size.shapeLevel2(),color: color.primary,),
-                              SizedBox(height: size.verticalSpaceLevel6(),),
-                              Text(
-                                "No Conversation Yet",
-                                style: TextStyle(
-                                  fontSize: size.textLevel6(),
+                                Icon(
+                                  Icons.supervisor_account_outlined,
+                                  size: size.shapeLevel2(),
                                   color: color.primary,
-                                  fontWeight: FontWeight.bold,
                                 ),
-                              ),
-                            ],),
-
+                                SizedBox(
+                                  height: size.verticalSpaceLevel6(),
+                                ),
+                                Text(
+                                  "No Conversation Yet",
+                                  style: TextStyle(
+                                    fontSize: size.textLevel6(),
+                                    color: color.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                   )
                 ],
@@ -224,60 +197,24 @@ class _HomeState extends State<Home> {
               state.getCurrentUserDataStatus as GetCurrentUserDataError;
           return SafeArea(
             child: Scaffold(
+              key: _scaffoldKey,
               drawer: CustomDrawer(context: context),
-              appBar: AppBar(
-                toolbarHeight: size.shapeLevel4(),
-                // تنظیم ارتفاع بیشتر برای AppBar
-                backgroundColor: Colors.transparent,
-                // ایجاد پس‌زمینه شفاف
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        color.tertiary,
-                        color.tertiary.withOpacity(0.5),
-                        color.tertiary.withOpacity(0.25),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(15), // افکت خمیده در گوشه‌ها
-                      bottomRight: Radius.circular(15),
-                    ),
-                  ),
-                ),
+              appBar: CustomAppBar(
+                context: context,
+                titleText: 'Check your Network ',
                 leading: InkWell(
                   borderRadius: BorderRadius.circular(size.shapeLevel6()),
-                  onTap: () => _scaffoldKey.currentState!.openDrawer(),
+                  onTap: () => _scaffoldKey.currentState?.openDrawer(),
                   child: Icon(
                     Icons.menu,
                     size: size.shapeLevel6(),
                     color: color.primary, // رنگ آیکن منو
                   ),
                 ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: color.primary,
-                      radius: size.shapeLevel6(),
-                      child: Icon(
-                        Icons.person,
-                        color: color.onPrimary,
-                        size: size.shapeLevel7(),
-                      ),
-                    ),
-                    SizedBox(width: size.horizontalSpaceLevel5()),
-                    Text(
-                      'Connecting ... ',
-                      style: TextStyle(
-                        fontSize: size.textLevel4() / 2,
-                        color: color.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                avatar: Icon(
+                  Icons.person,
+                  color: color.onPrimary,
+                  size: size.shapeLevel5(),
                 ),
               ),
               body: Center(

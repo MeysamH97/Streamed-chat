@@ -3,6 +3,8 @@ import 'package:chat_by_socket_samle/features/auth_service/domain/use_cases/auth
 import 'package:chat_by_socket_samle/features/auth_service/domain/use_cases/signInWithEmailAndPassword_usecase.dart';
 import 'package:chat_by_socket_samle/features/auth_service/domain/use_cases/signOut_usecase.dart';
 import 'package:chat_by_socket_samle/features/auth_service/presentation/bloc/auth_bloc.dart';
+import 'package:chat_by_socket_samle/features/auth_service/presentation/bloc/login_cubit.dart';
+import 'package:chat_by_socket_samle/features/auth_service/presentation/bloc/signUp_cubit.dart';
 import 'package:chat_by_socket_samle/features/home/data/data_source/remote/socket_provider.dart';
 import 'package:chat_by_socket_samle/features/home/domain/use_cases/get_current_user_data_use_case.dart';
 import 'package:get_it/get_it.dart';
@@ -36,6 +38,13 @@ setup() async {
       GetCurrentUserDataUseCase(locator()));
 
   ///Blocs
+  locator.registerSingleton<LoginCubit>(
+    LoginCubit(),
+  );
+  locator.registerSingleton<SignUpCubit>(
+    SignUpCubit(
+    ),
+  );
   locator.registerSingleton<AuthBloc>(
     AuthBloc(
       locator(),
@@ -44,5 +53,7 @@ setup() async {
       locator(),
     ),
   );
-  locator.registerSingleton<HomeBloc>(HomeBloc(locator()));
+  locator.registerSingleton<HomeBloc>(
+    HomeBloc(locator()),
+  );
 }

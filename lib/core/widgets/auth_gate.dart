@@ -41,10 +41,10 @@ class AuthGate extends StatelessWidget {
           return MultiBlocProvider(
             providers: [
               BlocProvider<LoginCubit>(
-                create: (_) => LoginCubit(),
+                create: (_) => locator(),
               ),
               BlocProvider<SignUpCubit>(
-                create: (_) => SignUpCubit(),
+                create: (_) => locator(),
               ),
               BlocProvider<HomeBloc>(
                 create: (_) => HomeBloc(locator()),

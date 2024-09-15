@@ -67,13 +67,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<SignUpWithEmailAndPasswordEvent>((event, emit) async {
       print('Start sign up event');
-
-      // emit(
-      //   state.copyWith(
-      //     newAuthStatus: AuthError('Please Login or SignUp'),
-      //   ),
-      // );
-
       DataState dataState = await signUpWithEmailAndPasswordUseCase(
           {'email': event.email, 'password': event.password});
       print('user data prepared');
@@ -88,11 +81,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<SignOutEvent>((event, emit) async {
-      // emit(
-      //   state.copyWith(
-      //     newAuthStatus: AuthError('Please Login or SignUp'),
-      //   ),
-      // );
 
       DataState dataState = await signOutUseCase(event.userId);
 

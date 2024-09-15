@@ -1,5 +1,5 @@
 import 'package:chat_by_socket_samle/core/resources/custom_sizes.dart';
-import 'package:chat_by_socket_samle/features/auth_service/domain/entities/user_entity.dart';
+import 'package:chat_by_socket_samle/features/auth_service/domain/entities/user_model_entity.dart';
 import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {
@@ -10,7 +10,7 @@ class UserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme theme = Theme.of(context).colorScheme;
+    ColorScheme color = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -20,12 +20,12 @@ class UserTile extends StatelessWidget {
             vertical: CustomSize(context).verticalSpaceLevel7(),
           ),
           margin: EdgeInsets.symmetric(
-            horizontal: CustomSize(context).horizontalSpaceLevel4(),
+            horizontal: CustomSize(context).horizontalSpaceLevel5(),
             vertical: CustomSize(context).verticalSpaceLevel8(),
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: theme.secondary,
+            color: color.tertiary,
           ),
           child: Row(
             children: [
@@ -69,7 +69,7 @@ class UserTile extends StatelessWidget {
                 user.email ?? user.email,
                 style: TextStyle(
                   fontSize: CustomSize(context).textLevel6(),
-                  color: theme.inversePrimary,
+                  color: color.inversePrimary,
                 ),
               ),
             ],

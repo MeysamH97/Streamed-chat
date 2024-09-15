@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/resources/custom_sizes.dart';
 
-class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({
-    super.key,
-    required this.title,
-    this.profilePictureUrl,
-    this.leading
-  });
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
+  const CustomAppBar(
+      {super.key,
+      required this.titleText,
+      this.leading,
+      this.avatar,
+      this.avatarRadius,
+      this.titleSize, required this.context});
 
-  final String title;
-  final String? profilePictureUrl;
+  final BuildContext context;
+  final String titleText;
   final Widget? leading;
+  final Widget? avatar;
+  final double? avatarRadius;
+  final double? titleSize;
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +25,8 @@ class CustomAppBar extends StatelessWidget {
     final ColorScheme color = Theme.of(context).colorScheme;
 
     return AppBar(
-      key: ValueKey<String>(title), // برای مدیریت انیمیشن‌ها در AnimatedSwitcher
-      toolbarHeight: size.shapeLevel4(),
+      elevation: 50,
+      toolbarHeight: size.verticalSpaceLevel3(),
       backgroundColor: Colors.transparent,
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -34,40 +39,32 @@ class CustomAppBar extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-          ),
         ),
       ),
       leading: leading,
       title: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CircleAvatar(
-            backgroundColor: color.primary,
-            radius: size.shapeLevel6(),
-            child: (profilePictureUrl != null && profilePictureUrl != '')
-                ? ClipRRect(
-              borderRadius: BorderRadius.circular(size.shapeLevel5()),
-              child: Image.network(
-                profilePictureUrl!,
-                width: size.shapeLevel5() * 2,
-                height: size.shapeLevel5() * 2,
-                fit: BoxFit.fill,
-              ),
-            )
-                : Icon(
-              Icons.person,
-              color: color.onPrimary,
-              size: size.shapeLevel7(),
-            ),
-          ),
-          SizedBox(width: size.horizontalSpaceLevel5()),
+          avatar != null
+              ? Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: color.primary,
+                      radius: size.shapeLevel6(),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(size.shapeLevel5()),
+                        child: avatar,
+                      ),
+                    ),
+                    SizedBox(width: size.horizontalSpaceLevel5()),
+                  ],
+                )
+              : const SizedBox(),
           Text(
-            title,
+            titleText,
             style: TextStyle(
-              fontSize: size.textLevel4() / 2,
+              fontSize: titleSize ?? size.textLevel4()/2,
               color: color.primary,
               fontWeight: FontWeight.bold,
             ),
@@ -76,4 +73,10 @@ class CustomAppBar extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => Size.fromHeight(size.verticalSpaceLevel3());
+
+  get size => CustomSize(context);
 }

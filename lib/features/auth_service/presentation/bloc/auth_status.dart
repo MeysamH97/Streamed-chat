@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../domain/entities/user_entity.dart';
+import '../../domain/entities/user_model_entity.dart';
 
 @immutable
 abstract class AuthStatus extends Equatable{

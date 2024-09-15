@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/resources/data_state.dart';
-import '../../domain/entities/user_entity.dart';
+import '../../domain/entities/user_model_entity.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../data_source/remote/auth_service_provider.dart';
 import '../models/user_model.dart';

@@ -1,7 +1,7 @@
 import 'package:chat_by_socket_samle/features/home/data/data_source/remote/socket_provider.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../auth_service/data/models/user_model.dart';
-import '../../../auth_service/domain/entities/user_entity.dart';
+import '../../../auth_service/domain/entities/user_model_entity.dart';
 import '../../domain/repository/home_repository.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'dart:async';

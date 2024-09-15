@@ -1,13 +1,14 @@
 import 'package:chat_by_socket_samle/core/resources/custom_sizes.dart';
 import 'package:chat_by_socket_samle/core/widgets/custom_show_dialog.dart';
+import 'package:chat_by_socket_samle/features/home/presentation/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../auth_service/presentation/bloc/auth_bloc.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key, required this.context});
+
   final BuildContext context;
 
   @override
@@ -89,7 +90,10 @@ class CustomDrawer extends StatelessWidget {
                   vertical: size.verticalSpaceLevel8(),
                 ),
                 child: ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Settings(),));
+                    },
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -168,21 +172,26 @@ class CustomDrawer extends StatelessWidget {
   }
 
   logOutDialog(BuildContext context) {
-    return showDialog(context: context, builder: (dialogContext) {
-      return CustomShowDialog(
-        title: 'Log out',
-        content: 'Are you sure you want to log out?',
-        acceptText: 'Log Out',
-        acceptFunction: () => logOut(context),
-      );
-    },);
+    return showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return CustomShowDialog(
+          title: 'Log out',
+          content: 'Are you sure you want to log out?',
+          acceptText: 'Log Out',
+          acceptFunction: () => logOut(context),
+        );
+      },
+    );
   }
 
-  logOut(context) async{
+  logOut(context) async {
     final prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('userId');
+    Navigator.pop(context);
     BlocProvider.of<AuthBloc>(context).add(
       SignOutEvent(userId!),
     );
+
   }
 }

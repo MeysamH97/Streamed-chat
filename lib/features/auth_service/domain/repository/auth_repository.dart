@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/resources/data_state.dart';
-import '../entities/user_entity.dart';
+import '../entities/user_model_entity.dart';
 
 abstract class AuthRepository {
 
