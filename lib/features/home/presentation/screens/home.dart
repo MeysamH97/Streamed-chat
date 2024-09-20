@@ -1,12 +1,13 @@
-import 'package:chat_by_socket_samle/features/auth_service/domain/entities/user_model_entity.dart';
 import 'package:chat_by_socket_samle/features/home/presentation/bloc/home_bloc/get_current_user_data_status.dart';
 import 'package:chat_by_socket_samle/features/home/presentation/widgets/custom_drawer.dart';
-import 'package:chat_by_socket_samle/features/home/presentation/widgets/user_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/resources/current_user_provider.dart';
 import '../../../../core/resources/custom_sizes.dart';
 import '../../../../core/widgets/loading_widget.dart';
+import '../../../../locator.dart';
+import '../bloc/contact_bloc/contact_bloc.dart';
 import '../bloc/home_bloc/home_bloc.dart';
 import '../widgets/custom_app_bar.dart';
 import 'contacts.dart';
@@ -21,34 +22,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<UserModelEntity> users = [
-    OtherUserEntity(
-      id: '1',
-      email: 'Reza',
-      isOnline: true,   ),
-    OtherUserEntity(
-      id: '1',
-      email: 'Hasan',
-      isOnline: false,
-      profilePictureUrl:
-          'https://www.springboard.com/blog/wp-content/uploads/2023/09/what-exactly-does-a-programmer-do.jpeg',
-    ),
-    OtherUserEntity(
-      id: '1',
-      email: 'Ali',
-      isOnline: true,
-    ),
-    OtherUserEntity(
-      id: '1',
-      email: 'Mohammad',
-      isOnline: false,    ),
-  ];
   late GlobalKey<ScaffoldState> _scaffoldKey;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
     BlocProvider.of<HomeBloc>(context)
         .add(GetCurrentUserDataEvent(widget.currentUserId));
     _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -58,17 +37,34 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final ColorScheme color = Theme.of(context).colorScheme;
     final CustomSize size = CustomSize(context);
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
 
+    return BlocConsumer<HomeBloc, HomeState>(
+      listener: (context, state) {
+        if (state.getCurrentUserDataStatus is GetCurrentUserDataCompleted) {
+          final getCurrentUserDataCompleted =
+              state.getCurrentUserDataStatus as GetCurrentUserDataCompleted;
+          CurrentUserProvider()
+              .setCurrentUser(getCurrentUserDataCompleted.currentUserEntity);
+        }
+      },
+      builder: (context, state) {
         if (state.getCurrentUserDataStatus is GetCurrentUserDataLoading) {
-          return SafeArea(
-            child: Scaffold(
+          return Scaffold(
               key: _scaffoldKey,
-              drawer: CustomDrawer(context: context),
+              drawer: CustomDrawer(
+                context: context,
+                currentUserId: widget.currentUserId,
+              ),
               appBar: CustomAppBar(
                 context: context,
-                titleText: 'Connecting ... ',
+                title: Text(
+                  'Connecting ... ',
+                  style: TextStyle(
+                    fontSize: size.textLevel4() / 2,
+                    color: color.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 leading: InkWell(
                   borderRadius: BorderRadius.circular(size.shapeLevel6()),
                   onTap: () => _scaffoldKey.currentState?.openDrawer(),
@@ -89,123 +85,151 @@ class _HomeState extends State<Home> {
                   size: CustomSize(context).shapeLevel5(),
                 ),
               ),
-            ),
-          );
+            );
         }
 
         if (state.getCurrentUserDataStatus is GetCurrentUserDataCompleted) {
-          final GetCurrentUserDataCompleted getCurrentUserDataCompleted =
+          final getCurrentUserDataCompleted =
               state.getCurrentUserDataStatus as GetCurrentUserDataCompleted;
-          UserModelEntity currentUser =
-              getCurrentUserDataCompleted.userModelEntity;
-          print(currentUser.toString());
-          return SafeArea(
-            child: Scaffold(
+
+          final currentUser = getCurrentUserDataCompleted.currentUserEntity;
+
+          return Scaffold(
               key: _scaffoldKey,
-              drawer: CustomDrawer(context: context),
+              drawer: CustomDrawer(
+                context: context,
+                currentUserId: widget.currentUserId,
+              ),
               appBar: CustomAppBar(
-                  context: context,
-                  titleText: currentUser.username ?? '',
-                  leading: InkWell(
-                    borderRadius: BorderRadius.circular(size.shapeLevel6()),
-                    onTap: () => _scaffoldKey.currentState?.openDrawer(),
-                    child: Icon(
-                      Icons.menu,
-                      size: size.shapeLevel6(),
-                      color: color.primary, // رنگ آیکن منو
-                    ),
+                context: context,
+                title: Text(
+                  currentUser.username ?? '',
+                  style: TextStyle(
+                    fontSize: size.textLevel4() / 2,
+                    color: color.primary,
+                    fontWeight: FontWeight.bold,
                   ),
-                  avatar: Stack(
-                    children: [
-                      (currentUser.profilePictureUrl != null &&
-                              currentUser.profilePictureUrl != '')
-                          ? Image.network(
-                              currentUser.profilePictureUrl!,
-                              width: size.shapeLevel5() * 2,
-                              height: size.shapeLevel5() * 2,
-                              fit: BoxFit.fill,
-                            )
-                          : Icon(
-                              Icons.person,
-                              color: color.onPrimary,
-                              size: size.shapeLevel5(),
-                            ),
-                      if (currentUser.isOnline) ...[
-                        Positioned(
-                          right: 10,
-                          bottom: 10,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.red,
-                            radius: CustomSize(context).shapeLevel7() / 3,
+                ),
+                leading: InkWell(
+                  borderRadius: BorderRadius.circular(size.shapeLevel6()),
+                  onTap: () => _scaffoldKey.currentState?.openDrawer(),
+                  child: Icon(
+                    Icons.menu,
+                    size: size.shapeLevel6(),
+                    color: color.primary, // رنگ آیکن منو
+                  ),
+                ),
+                avatar: Stack(
+                  children: [
+                    (currentUser.profilePictureUrl != null &&
+                            currentUser.profilePictureUrl != '')
+                        ? Image.network(
+                            currentUser.profilePictureUrl!,
+                            width: size.shapeLevel5() * 2,
+                            height: size.shapeLevel5() * 2,
+                            fit: BoxFit.fill,
+                          )
+                        : Icon(
+                            Icons.person,
+                            color: color.onPrimary,
+                            size: size.shapeLevel5(),
                           ),
-                        )
-                      ],
+                    if (currentUser.isOnline) ...[
+                      Positioned(
+                        right: 10,
+                        bottom: 10,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.red,
+                          radius: CustomSize(context).shapeLevel7() / 3,
+                        ),
+                      )
                     ],
-                  )),
+                  ],
+                ),
+              ),
               floatingActionButton: FloatingActionButton(
                 backgroundColor: color.primary,
                 shape: const CircleBorder(),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Contacts()),
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider<ContactBloc>(
+                        create: (context) => ContactBloc(
+                          getContactsDataUseCase:
+                              locator(), // دریافت یوز کیس از DI یا Parent Bloc
+                        ),
+                        child: Contacts(
+                          contacts: currentUser.contacts ?? [],
+                        ),
+                      ),
+                    ),
                   );
                 },
                 // آیکون کانتکت
-                tooltip: 'New Converstation',
+                tooltip: 'New Conversation',
                 child: const Icon(Icons.add),
               ),
               body: Column(
                 children: [
-                  Expanded(
-                    child: users.isNotEmpty
-                        ? ListView.builder(
-                            itemCount: users.length,
-                            itemBuilder: (context, index) {
-                              final user = users[index];
-                              return UserTile(user: user);
-                            },
-                          )
-                        : Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.supervisor_account_outlined,
-                                  size: size.shapeLevel2(),
-                                  color: color.primary,
-                                ),
-                                SizedBox(
-                                  height: size.verticalSpaceLevel6(),
-                                ),
-                                Text(
-                                  "No Conversation Yet",
-                                  style: TextStyle(
-                                    fontSize: size.textLevel6(),
-                                    color: color.primary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                  )
+                  // Expanded(
+                  //   child: users.isNotEmpty
+                  //       ? ListView.builder(
+                  //           itemCount: users.length,
+                  //           itemBuilder: (context, index) {
+                  //             final user = users[index];
+                  //             return UserTile(: user);
+                  //           },
+                  //         )
+                  //       : Center(
+                  //           child: Column(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               Icon(
+                  //                 Icons.supervisor_account_outlined,
+                  //                 size: size.shapeLevel2(),
+                  //                 color: color.primary,
+                  //               ),
+                  //               SizedBox(
+                  //                 height: size.verticalSpaceLevel6(),
+                  //               ),
+                  //               Text(
+                  //                 "No Conversation Yet",
+                  //                 style: TextStyle(
+                  //                   fontSize: size.textLevel6(),
+                  //                   color: color.primary,
+                  //                   fontWeight: FontWeight.bold,
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  // ),
                 ],
               ),
-            ),
-          );
+            );
         }
 
         if (state.getCurrentUserDataStatus is GetCurrentUserDataError) {
-          final GetCurrentUserDataError getCurrentUserDataError =
+          final getCurrentUserDataError =
               state.getCurrentUserDataStatus as GetCurrentUserDataError;
-          return SafeArea(
-            child: Scaffold(
+
+          return Scaffold(
               key: _scaffoldKey,
-              drawer: CustomDrawer(context: context),
+              drawer: CustomDrawer(
+                context: context,
+                currentUserId: widget.currentUserId,
+              ),
               appBar: CustomAppBar(
                 context: context,
-                titleText: 'Check your Network ',
+                title: Text(
+                  'Check your Network',
+                  style: TextStyle(
+                    fontSize: size.textLevel4() / 2,
+                    color: color.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 leading: InkWell(
                   borderRadius: BorderRadius.circular(size.shapeLevel6()),
                   onTap: () => _scaffoldKey.currentState?.openDrawer(),
@@ -231,11 +255,10 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-            ),
-          );
+            );
         }
 
-        return const SizedBox();
+        return const SizedBox.shrink();
       },
     );
   }

@@ -12,15 +12,15 @@ _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       pictureUrl: json['pictureUrl'] as String?,
       ownerId: json['ownerId'] as String,
-      adminsId:
-          (json['adminsId'] as List<dynamic>).map((e) => e as String).toList(),
-      membersId:
-          (json['membersId'] as List<dynamic>).map((e) => e as String).toList(),
-      messagesId: (json['messagesId'] as List<dynamic>?)
+      admins:
+          (json['admins'] as List<dynamic>).map((e) => e as String).toList(),
+      members:
+          (json['members'] as List<dynamic>).map((e) => e as String).toList(),
+      messages: (json['messages'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const [],
-      isTypingsId: (json['isTypingsId'] as List<dynamic>?)
+      isTypings: (json['isTypings'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const [],
@@ -33,10 +33,10 @@ Map<String, dynamic> _$$ChatModelImplToJson(_$ChatModelImpl instance) =>
       'title': instance.title,
       'pictureUrl': instance.pictureUrl,
       'ownerId': instance.ownerId,
-      'adminsId': instance.adminsId,
-      'membersId': instance.membersId,
-      'messagesId': instance.messagesId,
-      'isTypingsId': instance.isTypingsId,
+      'admins': instance.admins,
+      'members': instance.members,
+      'messages': instance.messages,
+      'isTypings': instance.isTypings,
       'type': _$ChatTypeEnumMap[instance.type]!,
     };
 

@@ -10,13 +10,17 @@ class HomeState extends Equatable {
 
   HomeState copyWith({
     GetCurrentUserDataStatus? newGetCurrentUserDataStatus,
+    GetContactsDataStatus? newGetContactsDataStatus,
   }) {
     return HomeState(
-      getCurrentUserDataStatus: newGetCurrentUserDataStatus ?? getCurrentUserDataStatus,
+      getCurrentUserDataStatus:
+          newGetCurrentUserDataStatus ?? getCurrentUserDataStatus,
     );
   }
 
   @override
   // TODO: implement props
-  List<Object?> get props => [getCurrentUserDataStatus];
+  List<Object?> get props => [
+        getCurrentUserDataStatus,
+      ];
 }

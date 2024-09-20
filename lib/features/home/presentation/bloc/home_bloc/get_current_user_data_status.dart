@@ -15,11 +15,11 @@ class GetCurrentUserDataLoading extends GetCurrentUserDataStatus {
 
 class GetCurrentUserDataCompleted extends GetCurrentUserDataStatus {
 
-  final UserModelEntity userModelEntity;
-  GetCurrentUserDataCompleted(this.userModelEntity);
+  final CurrentUserEntity currentUserEntity;
+  GetCurrentUserDataCompleted(this.currentUserEntity);
 
   @override
-  List<Object?> get props => [userModelEntity];
+  List<Object?> get props => [currentUserEntity];
 
 }
 

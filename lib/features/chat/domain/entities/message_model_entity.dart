@@ -6,7 +6,7 @@ import '../../data/models/message_model.dart';
 
 class MessageModelEntity extends Equatable {
   final String id;
-  final OtherUserEntity sender;
+  final String sender;
   final String content;
   final Timestamp time;
   final MessageType type;

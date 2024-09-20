@@ -25,9 +25,9 @@ mixin _$CurrentUserModel {
   String? get profilePictureUrl => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
-  List<String> get contactsId => throw _privateConstructorUsedError;
-  List<String> get blockedUsersId => throw _privateConstructorUsedError;
-  List<String> get chatsId => throw _privateConstructorUsedError;
+  List<String> get contacts => throw _privateConstructorUsedError;
+  List<String> get blockedUsers => throw _privateConstructorUsedError;
+  List<String> get chats => throw _privateConstructorUsedError;
   bool get isOnline => throw _privateConstructorUsedError;
 
   /// Serializes this CurrentUserModel to a JSON map.
@@ -52,9 +52,9 @@ abstract class $CurrentUserModelCopyWith<$Res> {
       String? profilePictureUrl,
       String email,
       String password,
-      List<String> contactsId,
-      List<String> blockedUsersId,
-      List<String> chatsId,
+      List<String> contacts,
+      List<String> blockedUsers,
+      List<String> chats,
       bool isOnline});
 }
 
@@ -78,9 +78,9 @@ class _$CurrentUserModelCopyWithImpl<$Res, $Val extends CurrentUserModel>
     Object? profilePictureUrl = freezed,
     Object? email = null,
     Object? password = null,
-    Object? contactsId = null,
-    Object? blockedUsersId = null,
-    Object? chatsId = null,
+    Object? contacts = null,
+    Object? blockedUsers = null,
+    Object? chats = null,
     Object? isOnline = null,
   }) {
     return _then(_value.copyWith(
@@ -104,17 +104,17 @@ class _$CurrentUserModelCopyWithImpl<$Res, $Val extends CurrentUserModel>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      contactsId: null == contactsId
-          ? _value.contactsId
-          : contactsId // ignore: cast_nullable_to_non_nullable
+      contacts: null == contacts
+          ? _value.contacts
+          : contacts // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      blockedUsersId: null == blockedUsersId
-          ? _value.blockedUsersId
-          : blockedUsersId // ignore: cast_nullable_to_non_nullable
+      blockedUsers: null == blockedUsers
+          ? _value.blockedUsers
+          : blockedUsers // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      chatsId: null == chatsId
-          ? _value.chatsId
-          : chatsId // ignore: cast_nullable_to_non_nullable
+      chats: null == chats
+          ? _value.chats
+          : chats // ignore: cast_nullable_to_non_nullable
               as List<String>,
       isOnline: null == isOnline
           ? _value.isOnline
@@ -138,9 +138,9 @@ abstract class _$$CurrentUserModelImplCopyWith<$Res>
       String? profilePictureUrl,
       String email,
       String password,
-      List<String> contactsId,
-      List<String> blockedUsersId,
-      List<String> chatsId,
+      List<String> contacts,
+      List<String> blockedUsers,
+      List<String> chats,
       bool isOnline});
 }
 
@@ -162,9 +162,9 @@ class __$$CurrentUserModelImplCopyWithImpl<$Res>
     Object? profilePictureUrl = freezed,
     Object? email = null,
     Object? password = null,
-    Object? contactsId = null,
-    Object? blockedUsersId = null,
-    Object? chatsId = null,
+    Object? contacts = null,
+    Object? blockedUsers = null,
+    Object? chats = null,
     Object? isOnline = null,
   }) {
     return _then(_$CurrentUserModelImpl(
@@ -188,17 +188,17 @@ class __$$CurrentUserModelImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      contactsId: null == contactsId
-          ? _value._contactsId
-          : contactsId // ignore: cast_nullable_to_non_nullable
+      contacts: null == contacts
+          ? _value._contacts
+          : contacts // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      blockedUsersId: null == blockedUsersId
-          ? _value._blockedUsersId
-          : blockedUsersId // ignore: cast_nullable_to_non_nullable
+      blockedUsers: null == blockedUsers
+          ? _value._blockedUsers
+          : blockedUsers // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      chatsId: null == chatsId
-          ? _value._chatsId
-          : chatsId // ignore: cast_nullable_to_non_nullable
+      chats: null == chats
+          ? _value._chats
+          : chats // ignore: cast_nullable_to_non_nullable
               as List<String>,
       isOnline: null == isOnline
           ? _value.isOnline
@@ -217,13 +217,13 @@ class _$CurrentUserModelImpl implements _CurrentUserModel {
       this.profilePictureUrl,
       required this.email,
       required this.password,
-      final List<String> contactsId = const [],
-      final List<String> blockedUsersId = const [],
-      final List<String> chatsId = const [],
+      final List<String> contacts = const [],
+      final List<String> blockedUsers = const [],
+      final List<String> chats = const [],
       required this.isOnline})
-      : _contactsId = contactsId,
-        _blockedUsersId = blockedUsersId,
-        _chatsId = chatsId;
+      : _contacts = contacts,
+        _blockedUsers = blockedUsers,
+        _chats = chats;
 
   factory _$CurrentUserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CurrentUserModelImplFromJson(json);
@@ -238,31 +238,31 @@ class _$CurrentUserModelImpl implements _CurrentUserModel {
   final String email;
   @override
   final String password;
-  final List<String> _contactsId;
+  final List<String> _contacts;
   @override
   @JsonKey()
-  List<String> get contactsId {
-    if (_contactsId is EqualUnmodifiableListView) return _contactsId;
+  List<String> get contacts {
+    if (_contacts is EqualUnmodifiableListView) return _contacts;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_contactsId);
+    return EqualUnmodifiableListView(_contacts);
   }
 
-  final List<String> _blockedUsersId;
+  final List<String> _blockedUsers;
   @override
   @JsonKey()
-  List<String> get blockedUsersId {
-    if (_blockedUsersId is EqualUnmodifiableListView) return _blockedUsersId;
+  List<String> get blockedUsers {
+    if (_blockedUsers is EqualUnmodifiableListView) return _blockedUsers;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_blockedUsersId);
+    return EqualUnmodifiableListView(_blockedUsers);
   }
 
-  final List<String> _chatsId;
+  final List<String> _chats;
   @override
   @JsonKey()
-  List<String> get chatsId {
-    if (_chatsId is EqualUnmodifiableListView) return _chatsId;
+  List<String> get chats {
+    if (_chats is EqualUnmodifiableListView) return _chats;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_chatsId);
+    return EqualUnmodifiableListView(_chats);
   }
 
   @override
@@ -270,7 +270,7 @@ class _$CurrentUserModelImpl implements _CurrentUserModel {
 
   @override
   String toString() {
-    return 'CurrentUserModel(id: $id, username: $username, profilePictureUrl: $profilePictureUrl, email: $email, password: $password, contactsId: $contactsId, blockedUsersId: $blockedUsersId, chatsId: $chatsId, isOnline: $isOnline)';
+    return 'CurrentUserModel(id: $id, username: $username, profilePictureUrl: $profilePictureUrl, email: $email, password: $password, contacts: $contacts, blockedUsers: $blockedUsers, chats: $chats, isOnline: $isOnline)';
   }
 
   @override
@@ -286,11 +286,10 @@ class _$CurrentUserModelImpl implements _CurrentUserModel {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
+            const DeepCollectionEquality().equals(other._contacts, _contacts) &&
             const DeepCollectionEquality()
-                .equals(other._contactsId, _contactsId) &&
-            const DeepCollectionEquality()
-                .equals(other._blockedUsersId, _blockedUsersId) &&
-            const DeepCollectionEquality().equals(other._chatsId, _chatsId) &&
+                .equals(other._blockedUsers, _blockedUsers) &&
+            const DeepCollectionEquality().equals(other._chats, _chats) &&
             (identical(other.isOnline, isOnline) ||
                 other.isOnline == isOnline));
   }
@@ -304,9 +303,9 @@ class _$CurrentUserModelImpl implements _CurrentUserModel {
       profilePictureUrl,
       email,
       password,
-      const DeepCollectionEquality().hash(_contactsId),
-      const DeepCollectionEquality().hash(_blockedUsersId),
-      const DeepCollectionEquality().hash(_chatsId),
+      const DeepCollectionEquality().hash(_contacts),
+      const DeepCollectionEquality().hash(_blockedUsers),
+      const DeepCollectionEquality().hash(_chats),
       isOnline);
 
   /// Create a copy of CurrentUserModel
@@ -333,9 +332,9 @@ abstract class _CurrentUserModel implements CurrentUserModel {
       final String? profilePictureUrl,
       required final String email,
       required final String password,
-      final List<String> contactsId,
-      final List<String> blockedUsersId,
-      final List<String> chatsId,
+      final List<String> contacts,
+      final List<String> blockedUsers,
+      final List<String> chats,
       required final bool isOnline}) = _$CurrentUserModelImpl;
 
   factory _CurrentUserModel.fromJson(Map<String, dynamic> json) =
@@ -352,11 +351,11 @@ abstract class _CurrentUserModel implements CurrentUserModel {
   @override
   String get password;
   @override
-  List<String> get contactsId;
+  List<String> get contacts;
   @override
-  List<String> get blockedUsersId;
+  List<String> get blockedUsers;
   @override
-  List<String> get chatsId;
+  List<String> get chats;
   @override
   bool get isOnline;
 

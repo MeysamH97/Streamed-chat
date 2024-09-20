@@ -9,10 +9,10 @@ class ChatModelEntity extends Equatable {
   final String title;
   final String? pictureUrl;
   final String ownerId;
-  final List<OtherUserEntity> admins;
-  final List<OtherUserEntity>? members;
-  final List<MessageModelEntity>? messages;
-  final List<OtherUserEntity>? isTyping;
+  final List<String> admins;
+  final List<String>? members;
+  final List<String>? messages;
+  final List<String>? isTyping;
   final ChatType type;
 
   const ChatModelEntity({

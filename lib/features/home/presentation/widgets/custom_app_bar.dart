@@ -5,18 +5,16 @@ import '../../../../core/resources/custom_sizes.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   const CustomAppBar(
       {super.key,
-      required this.titleText,
+      required this.title,
       this.leading,
       this.avatar,
-      this.avatarRadius,
-      this.titleSize, required this.context});
+      this.avatarRadius, required this.context});
 
   final BuildContext context;
-  final String titleText;
+  final Widget title;
   final Widget? leading;
   final Widget? avatar;
   final double? avatarRadius;
-  final double? titleSize;
 
 
   @override
@@ -61,14 +59,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
                   ],
                 )
               : const SizedBox(),
-          Text(
-            titleText,
-            style: TextStyle(
-              fontSize: titleSize ?? size.textLevel4()/2,
-              color: color.primary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          title,
         ],
       ),
     );

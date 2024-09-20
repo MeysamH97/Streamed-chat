@@ -14,18 +14,17 @@ _$CurrentUserModelImpl _$$CurrentUserModelImplFromJson(
       profilePictureUrl: json['profilePictureUrl'] as String?,
       email: json['email'] as String,
       password: json['password'] as String,
-      contactsId: (json['contactsId'] as List<dynamic>?)
+      contacts: (json['contacts'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const [],
-      blockedUsersId: (json['blockedUsersId'] as List<dynamic>?)
+      blockedUsers: (json['blockedUsers'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const [],
-      chatsId: (json['chatsId'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+      chats:
+          (json['chats'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
       isOnline: json['isOnline'] as bool,
     );
 
@@ -37,8 +36,8 @@ Map<String, dynamic> _$$CurrentUserModelImplToJson(
       'profilePictureUrl': instance.profilePictureUrl,
       'email': instance.email,
       'password': instance.password,
-      'contactsId': instance.contactsId,
-      'blockedUsersId': instance.blockedUsersId,
-      'chatsId': instance.chatsId,
+      'contacts': instance.contacts,
+      'blockedUsers': instance.blockedUsers,
+      'chats': instance.chats,
       'isOnline': instance.isOnline,
     };

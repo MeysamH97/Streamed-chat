@@ -3,10 +3,11 @@ import 'package:dio/dio.dart';
 
 class ChatServiceProvider {
   ApiServiceProvider apiServiceProvider = ApiServiceProvider();
+  SocketProvider socketProvider = SocketProvider();
 
-  Future<Response> getUserData(String userId, String token) async {
+  Future<Response> getChatData(String chatId, String token) async {
     try {
-      return await apiServiceProvider.getUserData(userId, token);
+      return await apiServiceProvider.getChatData(chatId, token);
     } on DioException catch (e) {
       throw Exception(e.response?.data['error'] ?? e.message);
     }

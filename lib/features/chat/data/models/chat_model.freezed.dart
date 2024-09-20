@@ -24,10 +24,10 @@ mixin _$ChatModel {
   String get title => throw _privateConstructorUsedError;
   String? get pictureUrl => throw _privateConstructorUsedError;
   String get ownerId => throw _privateConstructorUsedError;
-  List<String> get adminsId => throw _privateConstructorUsedError;
-  List<String> get membersId => throw _privateConstructorUsedError;
-  List<String> get messagesId => throw _privateConstructorUsedError;
-  List<String> get isTypingsId => throw _privateConstructorUsedError;
+  List<String> get admins => throw _privateConstructorUsedError;
+  List<String> get members => throw _privateConstructorUsedError;
+  List<String> get messages => throw _privateConstructorUsedError;
+  List<String> get isTypings => throw _privateConstructorUsedError;
   ChatType get type => throw _privateConstructorUsedError;
 
   /// Serializes this ChatModel to a JSON map.
@@ -50,10 +50,10 @@ abstract class $ChatModelCopyWith<$Res> {
       String title,
       String? pictureUrl,
       String ownerId,
-      List<String> adminsId,
-      List<String> membersId,
-      List<String> messagesId,
-      List<String> isTypingsId,
+      List<String> admins,
+      List<String> members,
+      List<String> messages,
+      List<String> isTypings,
       ChatType type});
 }
 
@@ -76,10 +76,10 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
     Object? title = null,
     Object? pictureUrl = freezed,
     Object? ownerId = null,
-    Object? adminsId = null,
-    Object? membersId = null,
-    Object? messagesId = null,
-    Object? isTypingsId = null,
+    Object? admins = null,
+    Object? members = null,
+    Object? messages = null,
+    Object? isTypings = null,
     Object? type = null,
   }) {
     return _then(_value.copyWith(
@@ -99,21 +99,21 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
-      adminsId: null == adminsId
-          ? _value.adminsId
-          : adminsId // ignore: cast_nullable_to_non_nullable
+      admins: null == admins
+          ? _value.admins
+          : admins // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      membersId: null == membersId
-          ? _value.membersId
-          : membersId // ignore: cast_nullable_to_non_nullable
+      members: null == members
+          ? _value.members
+          : members // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      messagesId: null == messagesId
-          ? _value.messagesId
-          : messagesId // ignore: cast_nullable_to_non_nullable
+      messages: null == messages
+          ? _value.messages
+          : messages // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      isTypingsId: null == isTypingsId
-          ? _value.isTypingsId
-          : isTypingsId // ignore: cast_nullable_to_non_nullable
+      isTypings: null == isTypings
+          ? _value.isTypings
+          : isTypings // ignore: cast_nullable_to_non_nullable
               as List<String>,
       type: null == type
           ? _value.type
@@ -136,10 +136,10 @@ abstract class _$$ChatModelImplCopyWith<$Res>
       String title,
       String? pictureUrl,
       String ownerId,
-      List<String> adminsId,
-      List<String> membersId,
-      List<String> messagesId,
-      List<String> isTypingsId,
+      List<String> admins,
+      List<String> members,
+      List<String> messages,
+      List<String> isTypings,
       ChatType type});
 }
 
@@ -160,10 +160,10 @@ class __$$ChatModelImplCopyWithImpl<$Res>
     Object? title = null,
     Object? pictureUrl = freezed,
     Object? ownerId = null,
-    Object? adminsId = null,
-    Object? membersId = null,
-    Object? messagesId = null,
-    Object? isTypingsId = null,
+    Object? admins = null,
+    Object? members = null,
+    Object? messages = null,
+    Object? isTypings = null,
     Object? type = null,
   }) {
     return _then(_$ChatModelImpl(
@@ -183,21 +183,21 @@ class __$$ChatModelImplCopyWithImpl<$Res>
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
-      adminsId: null == adminsId
-          ? _value._adminsId
-          : adminsId // ignore: cast_nullable_to_non_nullable
+      admins: null == admins
+          ? _value._admins
+          : admins // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      membersId: null == membersId
-          ? _value._membersId
-          : membersId // ignore: cast_nullable_to_non_nullable
+      members: null == members
+          ? _value._members
+          : members // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      messagesId: null == messagesId
-          ? _value._messagesId
-          : messagesId // ignore: cast_nullable_to_non_nullable
+      messages: null == messages
+          ? _value._messages
+          : messages // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      isTypingsId: null == isTypingsId
-          ? _value._isTypingsId
-          : isTypingsId // ignore: cast_nullable_to_non_nullable
+      isTypings: null == isTypings
+          ? _value._isTypings
+          : isTypings // ignore: cast_nullable_to_non_nullable
               as List<String>,
       type: null == type
           ? _value.type
@@ -215,15 +215,15 @@ class _$ChatModelImpl implements _ChatModel {
       required this.title,
       this.pictureUrl,
       required this.ownerId,
-      required final List<String> adminsId,
-      required final List<String> membersId,
-      final List<String> messagesId = const [],
-      final List<String> isTypingsId = const [],
+      required final List<String> admins,
+      required final List<String> members,
+      final List<String> messages = const [],
+      final List<String> isTypings = const [],
       required this.type})
-      : _adminsId = adminsId,
-        _membersId = membersId,
-        _messagesId = messagesId,
-        _isTypingsId = isTypingsId;
+      : _admins = admins,
+        _members = members,
+        _messages = messages,
+        _isTypings = isTypings;
 
   factory _$ChatModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatModelImplFromJson(json);
@@ -236,38 +236,38 @@ class _$ChatModelImpl implements _ChatModel {
   final String? pictureUrl;
   @override
   final String ownerId;
-  final List<String> _adminsId;
+  final List<String> _admins;
   @override
-  List<String> get adminsId {
-    if (_adminsId is EqualUnmodifiableListView) return _adminsId;
+  List<String> get admins {
+    if (_admins is EqualUnmodifiableListView) return _admins;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_adminsId);
+    return EqualUnmodifiableListView(_admins);
   }
 
-  final List<String> _membersId;
+  final List<String> _members;
   @override
-  List<String> get membersId {
-    if (_membersId is EqualUnmodifiableListView) return _membersId;
+  List<String> get members {
+    if (_members is EqualUnmodifiableListView) return _members;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_membersId);
+    return EqualUnmodifiableListView(_members);
   }
 
-  final List<String> _messagesId;
+  final List<String> _messages;
   @override
   @JsonKey()
-  List<String> get messagesId {
-    if (_messagesId is EqualUnmodifiableListView) return _messagesId;
+  List<String> get messages {
+    if (_messages is EqualUnmodifiableListView) return _messages;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_messagesId);
+    return EqualUnmodifiableListView(_messages);
   }
 
-  final List<String> _isTypingsId;
+  final List<String> _isTypings;
   @override
   @JsonKey()
-  List<String> get isTypingsId {
-    if (_isTypingsId is EqualUnmodifiableListView) return _isTypingsId;
+  List<String> get isTypings {
+    if (_isTypings is EqualUnmodifiableListView) return _isTypings;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_isTypingsId);
+    return EqualUnmodifiableListView(_isTypings);
   }
 
   @override
@@ -275,7 +275,7 @@ class _$ChatModelImpl implements _ChatModel {
 
   @override
   String toString() {
-    return 'ChatModel(id: $id, title: $title, pictureUrl: $pictureUrl, ownerId: $ownerId, adminsId: $adminsId, membersId: $membersId, messagesId: $messagesId, isTypingsId: $isTypingsId, type: $type)';
+    return 'ChatModel(id: $id, title: $title, pictureUrl: $pictureUrl, ownerId: $ownerId, admins: $admins, members: $members, messages: $messages, isTypings: $isTypings, type: $type)';
   }
 
   @override
@@ -288,13 +288,11 @@ class _$ChatModelImpl implements _ChatModel {
             (identical(other.pictureUrl, pictureUrl) ||
                 other.pictureUrl == pictureUrl) &&
             (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
-            const DeepCollectionEquality().equals(other._adminsId, _adminsId) &&
+            const DeepCollectionEquality().equals(other._admins, _admins) &&
+            const DeepCollectionEquality().equals(other._members, _members) &&
+            const DeepCollectionEquality().equals(other._messages, _messages) &&
             const DeepCollectionEquality()
-                .equals(other._membersId, _membersId) &&
-            const DeepCollectionEquality()
-                .equals(other._messagesId, _messagesId) &&
-            const DeepCollectionEquality()
-                .equals(other._isTypingsId, _isTypingsId) &&
+                .equals(other._isTypings, _isTypings) &&
             (identical(other.type, type) || other.type == type));
   }
 
@@ -306,10 +304,10 @@ class _$ChatModelImpl implements _ChatModel {
       title,
       pictureUrl,
       ownerId,
-      const DeepCollectionEquality().hash(_adminsId),
-      const DeepCollectionEquality().hash(_membersId),
-      const DeepCollectionEquality().hash(_messagesId),
-      const DeepCollectionEquality().hash(_isTypingsId),
+      const DeepCollectionEquality().hash(_admins),
+      const DeepCollectionEquality().hash(_members),
+      const DeepCollectionEquality().hash(_messages),
+      const DeepCollectionEquality().hash(_isTypings),
       type);
 
   /// Create a copy of ChatModel
@@ -334,10 +332,10 @@ abstract class _ChatModel implements ChatModel {
       required final String title,
       final String? pictureUrl,
       required final String ownerId,
-      required final List<String> adminsId,
-      required final List<String> membersId,
-      final List<String> messagesId,
-      final List<String> isTypingsId,
+      required final List<String> admins,
+      required final List<String> members,
+      final List<String> messages,
+      final List<String> isTypings,
       required final ChatType type}) = _$ChatModelImpl;
 
   factory _ChatModel.fromJson(Map<String, dynamic> json) =
@@ -352,13 +350,13 @@ abstract class _ChatModel implements ChatModel {
   @override
   String get ownerId;
   @override
-  List<String> get adminsId;
+  List<String> get admins;
   @override
-  List<String> get membersId;
+  List<String> get members;
   @override
-  List<String> get messagesId;
+  List<String> get messages;
   @override
-  List<String> get isTypingsId;
+  List<String> get isTypings;
   @override
   ChatType get type;
 

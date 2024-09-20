@@ -3,11 +3,13 @@ import 'package:chat_by_socket_samle/features/auth_service/domain/use_cases/auth
 import 'package:chat_by_socket_samle/features/auth_service/domain/use_cases/signInWithEmailAndPassword_usecase.dart';
 import 'package:chat_by_socket_samle/features/chat/data/data_source/remote/chat_service_provider.dart';
 import 'package:chat_by_socket_samle/features/home/data/data_source/remote/home_service_provider.dart';
+import 'package:chat_by_socket_samle/features/home/domain/use_cases/get_contacts_data_use_case.dart';
 import 'package:chat_by_socket_samle/features/home/domain/use_cases/signOut_usecase.dart';
 import 'package:chat_by_socket_samle/features/auth_service/presentation/bloc/auth_bloc.dart';
 import 'package:chat_by_socket_samle/features/auth_service/presentation/bloc/login_cubit.dart';
 import 'package:chat_by_socket_samle/features/auth_service/presentation/bloc/signUp_cubit.dart';
 import 'package:chat_by_socket_samle/features/home/domain/use_cases/get_current_user_data_use_case.dart';
+import 'package:chat_by_socket_samle/features/home/presentation/bloc/contact_bloc/contact_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/resources/api_service.dart';
@@ -42,24 +44,30 @@ setup() async {
   locator.registerSingleton<SignOutUseCase>(SignOutUseCase(locator()));
   locator.registerSingleton<GetCurrentUserDataUseCase>(
       GetCurrentUserDataUseCase(locator()));
+  locator.registerSingleton<GetContactsDataUseCase>(
+      GetContactsDataUseCase(locator()));
 
   ///Blocs
   locator.registerSingleton<LoginCubit>(
     LoginCubit(),
   );
   locator.registerSingleton<SignUpCubit>(
-    SignUpCubit(
-    ),
+    SignUpCubit(),
   );
   locator.registerSingleton<AuthBloc>(
     AuthBloc(
-      locator(),
-      locator(),
-      locator(),
-      locator(),
+      authCheckUseCase: locator(),
+      signInWithEmailAndPasswordUseCase: locator(),
+      signUpWithEmailAndPasswordUseCase: locator(),
+      signOutUseCase: locator(),
     ),
   );
   locator.registerSingleton<HomeBloc>(
-    HomeBloc(locator()),
+    HomeBloc(
+      getCurrentUserDataUseCase: locator(),
+    ),
+  );
+  locator.registerSingleton<ContactBloc>(
+    ContactBloc(getContactsDataUseCase: locator()),
   );
 }

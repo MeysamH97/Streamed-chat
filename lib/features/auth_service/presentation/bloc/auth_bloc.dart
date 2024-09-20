@@ -20,8 +20,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUpWithEmailAndPasswordUseCase signUpWithEmailAndPasswordUseCase;
   final SignOutUseCase signOutUseCase;
 
-  AuthBloc(this.authCheckUseCase, this.signInWithEmailAndPasswordUseCase,
-      this.signUpWithEmailAndPasswordUseCase, this.signOutUseCase)
+  AuthBloc(
+      {required this.authCheckUseCase,
+      required this.signInWithEmailAndPasswordUseCase,
+      required this.signUpWithEmailAndPasswordUseCase,
+      required this.signOutUseCase})
       : super(
           AuthState(
             authStatus: AuthLoading(),

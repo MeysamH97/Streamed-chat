@@ -21,7 +21,7 @@ MessageModel _$MessageModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MessageModel {
   String get id => throw _privateConstructorUsedError;
-  String get senderId => throw _privateConstructorUsedError;
+  String get sender => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   @TimestampConverter()
   Timestamp get time => throw _privateConstructorUsedError;
@@ -45,7 +45,7 @@ abstract class $MessageModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String senderId,
+      String sender,
       String content,
       @TimestampConverter() Timestamp time,
       MessageType type});
@@ -67,7 +67,7 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
   @override
   $Res call({
     Object? id = null,
-    Object? senderId = null,
+    Object? sender = null,
     Object? content = null,
     Object? time = null,
     Object? type = null,
@@ -77,9 +77,9 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      senderId: null == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
+      sender: null == sender
+          ? _value.sender
+          : sender // ignore: cast_nullable_to_non_nullable
               as String,
       content: null == content
           ? _value.content
@@ -107,7 +107,7 @@ abstract class _$$MessageModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      String senderId,
+      String sender,
       String content,
       @TimestampConverter() Timestamp time,
       MessageType type});
@@ -127,7 +127,7 @@ class __$$MessageModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? senderId = null,
+    Object? sender = null,
     Object? content = null,
     Object? time = null,
     Object? type = null,
@@ -137,9 +137,9 @@ class __$$MessageModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      senderId: null == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
+      sender: null == sender
+          ? _value.sender
+          : sender // ignore: cast_nullable_to_non_nullable
               as String,
       content: null == content
           ? _value.content
@@ -162,7 +162,7 @@ class __$$MessageModelImplCopyWithImpl<$Res>
 class _$MessageModelImpl implements _MessageModel {
   const _$MessageModelImpl(
       {required this.id,
-      required this.senderId,
+      required this.sender,
       required this.content,
       @TimestampConverter() required this.time,
       required this.type});
@@ -173,7 +173,7 @@ class _$MessageModelImpl implements _MessageModel {
   @override
   final String id;
   @override
-  final String senderId;
+  final String sender;
   @override
   final String content;
   @override
@@ -184,7 +184,7 @@ class _$MessageModelImpl implements _MessageModel {
 
   @override
   String toString() {
-    return 'MessageModel(id: $id, senderId: $senderId, content: $content, time: $time, type: $type)';
+    return 'MessageModel(id: $id, sender: $sender, content: $content, time: $time, type: $type)';
   }
 
   @override
@@ -193,8 +193,7 @@ class _$MessageModelImpl implements _MessageModel {
         (other.runtimeType == runtimeType &&
             other is _$MessageModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.senderId, senderId) ||
-                other.senderId == senderId) &&
+            (identical(other.sender, sender) || other.sender == sender) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.time, time) || other.time == time) &&
             (identical(other.type, type) || other.type == type));
@@ -202,8 +201,7 @@ class _$MessageModelImpl implements _MessageModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, senderId, content, time, type);
+  int get hashCode => Object.hash(runtimeType, id, sender, content, time, type);
 
   /// Create a copy of MessageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -224,7 +222,7 @@ class _$MessageModelImpl implements _MessageModel {
 abstract class _MessageModel implements MessageModel {
   const factory _MessageModel(
       {required final String id,
-      required final String senderId,
+      required final String sender,
       required final String content,
       @TimestampConverter() required final Timestamp time,
       required final MessageType type}) = _$MessageModelImpl;
@@ -235,7 +233,7 @@ abstract class _MessageModel implements MessageModel {
   @override
   String get id;
   @override
-  String get senderId;
+  String get sender;
   @override
   String get content;
   @override

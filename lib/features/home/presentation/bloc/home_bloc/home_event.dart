@@ -9,4 +9,10 @@ class GetCurrentUserDataEvent extends HomeEvent {
   GetCurrentUserDataEvent(this.userId);
 }
 
+class GetContactsDataEvent extends HomeEvent {
+  final List<String> contacts;
+
+  GetContactsDataEvent(this.contacts);
+}
+
 

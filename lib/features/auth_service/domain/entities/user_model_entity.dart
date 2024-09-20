@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:chat_by_socket_samle/features/chat/domain/entities/chat_model_entity.dart';
 
 // کلاس والد شامل اطلاعات پایه کاربر
 abstract class UserModelEntity extends Equatable {
@@ -43,9 +42,9 @@ class OtherUserEntity extends UserModelEntity {
 // کلاس شامل اطلاعات کامل برای کاربر جاری
 class CurrentUserEntity extends UserModelEntity {
   final String password;
-  final List<OtherUserEntity>? contacts;
-  final List<OtherUserEntity>? blockedUsers;
-  final List<ChatModelEntity>? chats;
+  final List<String>? contacts;
+  final List<String>? blockedUsers;
+  final List<String>? chats;
 
   const CurrentUserEntity({
     required super.id,

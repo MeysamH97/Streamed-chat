@@ -11,10 +11,10 @@ class ChatModel with _$ChatModel {
     required String title,
     String? pictureUrl,
     required String ownerId,
-    required List<String> adminsId,
-    required List<String> membersId,
-    @Default([]) List<String> messagesId,
-    @Default([]) List<String> isTypingsId,
+    required List<String> admins,
+    required List<String> members,
+    @Default([]) List<String> messages,
+    @Default([]) List<String> isTypings,
     required ChatType type,
   }) = _ChatModel;
 

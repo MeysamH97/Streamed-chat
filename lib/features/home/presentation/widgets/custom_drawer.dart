@@ -4,12 +4,16 @@ import 'package:chat_by_socket_samle/features/home/presentation/screens/settings
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../locator.dart';
 import '../../../auth_service/presentation/bloc/auth_bloc.dart';
+import '../bloc/home_bloc/home_bloc.dart';
+import '../screens/profile.dart';
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({super.key, required this.context});
+  const CustomDrawer({super.key, required this.context, required this.currentUserId});
 
   final BuildContext context;
+  final String currentUserId;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,7 @@ class CustomDrawer extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                height: size.verticalSpaceLevel2() * 2,
+                height: size.verticalSpaceLevel1()*1.4,
                 child: DrawerHeader(
                   child: Center(
                     child: Column(
@@ -53,7 +57,15 @@ class CustomDrawer extends StatelessWidget {
                   vertical: size.verticalSpaceLevel8(),
                 ),
                 child: ListTile(
-                    onTap: () {},
+                    onTap: () {
+
+                      Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>BlocProvider<HomeBloc>(
+                        create: (_) => locator(),
+                        child:   Profile(
+                        ),
+                      ),));
+                    },
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

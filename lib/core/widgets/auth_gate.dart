@@ -31,7 +31,7 @@ class AuthGate extends StatelessWidget {
         if (state.authStatus is AuthCompleted) {
           final AuthCompleted authCompleted = state.authStatus as AuthCompleted;
           return BlocProvider<HomeBloc>(
-            create: (_) => HomeBloc(locator()),
+            create: (_) => locator(),
             child: Home(
               currentUserId: authCompleted.userModelEntity.id,
             ),
@@ -47,7 +47,7 @@ class AuthGate extends StatelessWidget {
                 create: (_) => locator(),
               ),
               BlocProvider<HomeBloc>(
-                create: (_) => HomeBloc(locator()),
+                create: (_) => locator(),
               ),
             ],
             child: const LoginOrSignUp(),

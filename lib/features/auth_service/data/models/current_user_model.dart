@@ -13,9 +13,9 @@ class CurrentUserModel with _$CurrentUserModel {
     String? profilePictureUrl,
     required String email,
     required String password,
-    @Default([]) List<String> contactsId,
-    @Default([]) List<String> blockedUsersId,
-    @Default([]) List<String> chatsId,
+    @Default([]) List<String> contacts,
+    @Default([]) List<String> blockedUsers,
+    @Default([]) List<String> chats,
     required bool isOnline,
   }) = _CurrentUserModel;
 

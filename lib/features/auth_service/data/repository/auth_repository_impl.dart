@@ -28,7 +28,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
       Response newResponse =
           await authServiceProvider.getUserData(userId, token);
-      CurrentUserEntity currentUserData = await currentUserToEntity(
+      CurrentUserEntity currentUserData =  currentUserToEntity(
           CurrentUserModel.fromJson(newResponse.data));
 
       return DataSuccess(currentUserData);

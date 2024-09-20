@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-String baseUrl = 'https://98f9-140-99-252-71.ngrok-free.app';  // Sever address
+String baseUrl = 'https://296e-13-60-212-218.ngrok-free.app';  // Sever address
 
 class ApiService {
   final Dio _dio;

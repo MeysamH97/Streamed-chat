@@ -10,10 +10,10 @@ class Settings extends StatefulWidget {
   const Settings({super.key});
 
   @override
-  State<Settings> createState() => _HomeState();
+  State<Settings> createState() => _SettingsState();
 }
 
-class _HomeState extends State<Settings> {
+class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme color = Theme.of(context).colorScheme;
@@ -21,15 +21,26 @@ class _HomeState extends State<Settings> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: color.surface,
-        appBar: CustomAppBar( context: context, titleText: 'Settings',leading:  InkWell(
-          borderRadius: BorderRadius.circular(size.shapeLevel6()),
-          onTap: () => Navigator.pop(context),
-          child: Icon(
-            Icons.arrow_back_ios,
-            size: size.shapeLevel6(),
-            color: color.primary, // رنگ آیکن منو
+        appBar: CustomAppBar(
+          context: context,
+          title: Text(
+            'Settings',
+            style: TextStyle(
+              fontSize: size.textLevel4() / 2,
+              color: color.primary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),),
+          leading: InkWell(
+            borderRadius: BorderRadius.circular(size.shapeLevel6()),
+            onTap: () => Navigator.pop(context),
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: size.shapeLevel6(),
+              color: color.primary, // رنگ آیکن منو
+            ),
+          ),
+        ),
         body: Column(
           children: [
             Container(
@@ -56,9 +67,11 @@ class _HomeState extends State<Settings> {
                     ),
                   ),
                   CupertinoSwitch(
-                    value: Provider.of<ThemeProvider>(context, listen: false).isDarkMode,
-                    onChanged: (value)
-                      => Provider.of<ThemeProvider>(context, listen: false).toggleTheme(),
+                    value: Provider.of<ThemeProvider>(context, listen: false)
+                        .isDarkMode,
+                    onChanged: (value) =>
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .toggleTheme(),
                   )
                 ],
               ),
