@@ -63,7 +63,6 @@ class ApiServiceProvider {
           'password': password,
         },
       );
-      print('sign up done');
       return response;
     } on DioException catch (e) {
       throw Exception(e.response?.data['error'] ?? e.message);
@@ -132,9 +131,9 @@ class ApiServiceProvider {
       });
 
       // Handle stream closure
-      controller.onCancel = () {
-        socket.disconnect();
-      };
+      // controller.onCancel = () {
+      //   socket.disconnect();
+      // };
 
       yield* controller.stream; // Yield the stream
     } catch (e) {

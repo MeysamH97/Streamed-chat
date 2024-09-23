@@ -30,7 +30,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         {'userId' : event.userId, 'chatId' : event.chatId}
       )) {
 
-        print(dataState.data);
         if (dataState is DataSuccess) {
           emit(
             state.copyWith(
@@ -59,10 +58,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       DataState dataState = await sendMessagesUseCase(
         {'userId' : event.userId, 'chatId' : event.chatId, 'message' : event.newMessage});
 
-      print(dataState.error.toString());
-
         if (dataState is DataSuccess) {
-          print('success in sending');
           emit(
             state.copyWith(
               newSendMessageStatus:
@@ -70,7 +66,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             ),
           );
         } else if (dataState is DataFailed) {
-          print('Error in sending');
           emit(
             state.copyWith(
               newGetChatsDataStatus:

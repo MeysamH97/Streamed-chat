@@ -60,7 +60,6 @@ class _PrivateChatState extends State<PrivateChat> with AutomaticKeepAliveClient
     super.build(context);
     final CustomSize size = CustomSize(context);
     final ColorScheme color = Theme.of(context).colorScheme;
-
     return BlocBuilder<ContactBloc, ContactState>(
       builder: (context, state) {
         if (state.getContactsDataStatus is GetContactsDataCompleted) {
@@ -110,16 +109,18 @@ class _PrivateChatState extends State<PrivateChat> with AutomaticKeepAliveClient
               children: [
                 BlocBuilder<ChatBloc, ChatState>(builder: (context, state) {
                   if (state.getChatsDataStatus is GetChatsDataLoading) {
+                    print('Step 1');
                     return Expanded(
                       child: LoadingWidget(size: size.shapeLevel5()),
                     );
                   }
 
                   if (state.getChatsDataStatus is GetChatsDataCompleted) {
+                    print('Step 2');
                     final chat =
                         (state.getChatsDataStatus as GetChatsDataCompleted)
                             .chat;
-
+                    print('Step 3');
                     if (chat.messages != null) {
                       messages = chat.messages!;
                       messagesController = ScrollController();

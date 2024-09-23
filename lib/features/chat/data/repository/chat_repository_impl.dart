@@ -44,10 +44,6 @@ class ChatRepositoryImpl extends ChatRepository {
 
   @override
   Future<DataState<Map<String, dynamic>>> sendMessage (String userId, String chatId, MessageModelEntity message){
-
-    print(userId);
-    print(chatId);
-    print(message.toString());
     return chatServiceProvider.sendMessage(userId, chatId, message);
   }
 }
