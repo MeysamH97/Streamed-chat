@@ -16,6 +16,7 @@ abstract class UserModelEntity extends Equatable {
     required this.isOnline,
   });
 
+  @override
   List<Object?> get props => [id, email, username, profilePictureUrl, isOnline];
 }
 

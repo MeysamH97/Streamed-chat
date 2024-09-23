@@ -1,20 +1,25 @@
 import 'package:dio/dio.dart';
 import '../../../../../core/resources/api_service.dart';
+import '../../../../../core/resources/data_state.dart';
+import '../../../domain/entities/user_model_entity.dart';
 
 class AuthServiceProvider {
   final ApiServiceProvider apiServiceProvider = ApiServiceProvider();
 
 // Function to get user data by userId
-  Future<Response> getUserData(String userId, String token) async {
+  Stream<DataState<CurrentUserEntity>> watchCurrentUserData(String userId) {
     try {
-      return  await apiServiceProvider.getUserData(userId, token);
+      return apiServiceProvider.watchCurrentUserData(
+        userId,
+      );
     } on DioException catch (e) {
       throw Exception(e.response?.data['error'] ?? e.message);
     }
   }
 
   // Sign in
-  Future<Response> signInWithEmailAndPassword(String email, String password) async {
+  Future<Response> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
       return apiServiceProvider.signInWithEmailAndPassword(email, password);
     } on DioException catch (e) {
@@ -23,7 +28,8 @@ class AuthServiceProvider {
   }
 
   // Sign up
-  Future<Response> signUpWithEmailAndPassword(String email, String password) async {
+  Future<Response> signUpWithEmailAndPassword(
+      String email, String password) async {
     try {
       return apiServiceProvider.signUpWithEmailAndPassword(email, password);
     } on DioException catch (e) {
@@ -31,18 +37,10 @@ class AuthServiceProvider {
     }
   }
 
-  // Function to check if the token is valid
-  Future<Response> checkToken(String userId, String token ) async {
+  //check token
+  Future<Response> checkToken(String userId) async {
     try {
-      return apiServiceProvider.checkToken(userId, token);
-    } on DioException catch (e) {
-      throw Exception(e.response?.data['error'] ?? e.message);
-    }
-  }
-
-  Future<Response> getChatData(String chatId, String token) async {
-    try {
-      return  await apiServiceProvider.getChatData(chatId, token);
+      return apiServiceProvider.checkToken(userId);
     } on DioException catch (e) {
       throw Exception(e.response?.data['error'] ?? e.message);
     }

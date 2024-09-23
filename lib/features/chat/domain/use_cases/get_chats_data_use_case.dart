@@ -4,14 +4,14 @@ import '../../../../core/resources/data_state.dart';
 import '../../../../core/use_case/stream_use_case.dart';
 import '../repository/chat_repository.dart';
 
-class GetChatsDataUseCase extends StreamUseCase<DataState<ChatModelEntity>,String >{
+class GetChatsDataUseCase extends StreamUseCase<DataState<ChatModelEntity>,Map >{
   final ChatRepository chatRepository;
 
   GetChatsDataUseCase(this.chatRepository);
 
   @override
   Stream <DataState<ChatModelEntity>> call(param) {
-    return chatRepository.fetchChatData(param);
+    return chatRepository.fetchChatData(param['userId'], param['chatId']);
   }
 
 }

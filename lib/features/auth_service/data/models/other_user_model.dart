@@ -17,5 +17,6 @@ class OtherUserModel  with _$OtherUserModel {
 
   factory OtherUserModel.fromJson(Map<String, dynamic> json) =>
       _$OtherUserModelFromJson(json);
+
 }
 

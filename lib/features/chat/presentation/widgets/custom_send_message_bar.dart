@@ -5,9 +5,10 @@ import '../../../../core/resources/custom_sizes.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 
 class CustomSendMessageBar extends StatelessWidget {
-  const CustomSendMessageBar({super.key, required this.textFieldController});
+  const CustomSendMessageBar({super.key, required this.textFieldController, this.onSend});
 
   final TextEditingController textFieldController;
+  final void Function()? onSend;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class CustomSendMessageBar extends StatelessWidget {
             ),
           ),
           InkWell(
-              onTap: () {},
+              onTap: onSend,
               borderRadius: BorderRadius.circular(
                 size.shapeLevel5() * 2,
               ),

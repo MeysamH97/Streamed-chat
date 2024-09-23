@@ -21,13 +21,14 @@ ChatModel _$ChatModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ChatModel {
   String get id => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
   String? get pictureUrl => throw _privateConstructorUsedError;
-  String get ownerId => throw _privateConstructorUsedError;
+  String get owner => throw _privateConstructorUsedError;
   List<String> get admins => throw _privateConstructorUsedError;
   List<String> get members => throw _privateConstructorUsedError;
   List<String> get messages => throw _privateConstructorUsedError;
   List<String> get isTypings => throw _privateConstructorUsedError;
+  String? get lastMessage => throw _privateConstructorUsedError;
   ChatType get type => throw _privateConstructorUsedError;
 
   /// Serializes this ChatModel to a JSON map.
@@ -47,13 +48,14 @@ abstract class $ChatModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String title,
+      String? title,
       String? pictureUrl,
-      String ownerId,
+      String owner,
       List<String> admins,
       List<String> members,
       List<String> messages,
       List<String> isTypings,
+      String? lastMessage,
       ChatType type});
 }
 
@@ -73,13 +75,14 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
+    Object? title = freezed,
     Object? pictureUrl = freezed,
-    Object? ownerId = null,
+    Object? owner = null,
     Object? admins = null,
     Object? members = null,
     Object? messages = null,
     Object? isTypings = null,
+    Object? lastMessage = freezed,
     Object? type = null,
   }) {
     return _then(_value.copyWith(
@@ -87,17 +90,17 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       pictureUrl: freezed == pictureUrl
           ? _value.pictureUrl
           : pictureUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      ownerId: null == ownerId
-          ? _value.ownerId
-          : ownerId // ignore: cast_nullable_to_non_nullable
+      owner: null == owner
+          ? _value.owner
+          : owner // ignore: cast_nullable_to_non_nullable
               as String,
       admins: null == admins
           ? _value.admins
@@ -115,6 +118,10 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
           ? _value.isTypings
           : isTypings // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      lastMessage: freezed == lastMessage
+          ? _value.lastMessage
+          : lastMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -133,13 +140,14 @@ abstract class _$$ChatModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      String title,
+      String? title,
       String? pictureUrl,
-      String ownerId,
+      String owner,
       List<String> admins,
       List<String> members,
       List<String> messages,
       List<String> isTypings,
+      String? lastMessage,
       ChatType type});
 }
 
@@ -157,13 +165,14 @@ class __$$ChatModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
+    Object? title = freezed,
     Object? pictureUrl = freezed,
-    Object? ownerId = null,
+    Object? owner = null,
     Object? admins = null,
     Object? members = null,
     Object? messages = null,
     Object? isTypings = null,
+    Object? lastMessage = freezed,
     Object? type = null,
   }) {
     return _then(_$ChatModelImpl(
@@ -171,17 +180,17 @@ class __$$ChatModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       pictureUrl: freezed == pictureUrl
           ? _value.pictureUrl
           : pictureUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      ownerId: null == ownerId
-          ? _value.ownerId
-          : ownerId // ignore: cast_nullable_to_non_nullable
+      owner: null == owner
+          ? _value.owner
+          : owner // ignore: cast_nullable_to_non_nullable
               as String,
       admins: null == admins
           ? _value._admins
@@ -199,6 +208,10 @@ class __$$ChatModelImplCopyWithImpl<$Res>
           ? _value._isTypings
           : isTypings // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      lastMessage: freezed == lastMessage
+          ? _value.lastMessage
+          : lastMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -212,13 +225,14 @@ class __$$ChatModelImplCopyWithImpl<$Res>
 class _$ChatModelImpl implements _ChatModel {
   const _$ChatModelImpl(
       {required this.id,
-      required this.title,
+      this.title,
       this.pictureUrl,
-      required this.ownerId,
+      required this.owner,
       required final List<String> admins,
       required final List<String> members,
       final List<String> messages = const [],
       final List<String> isTypings = const [],
+      this.lastMessage,
       required this.type})
       : _admins = admins,
         _members = members,
@@ -231,11 +245,11 @@ class _$ChatModelImpl implements _ChatModel {
   @override
   final String id;
   @override
-  final String title;
+  final String? title;
   @override
   final String? pictureUrl;
   @override
-  final String ownerId;
+  final String owner;
   final List<String> _admins;
   @override
   List<String> get admins {
@@ -271,11 +285,13 @@ class _$ChatModelImpl implements _ChatModel {
   }
 
   @override
+  final String? lastMessage;
+  @override
   final ChatType type;
 
   @override
   String toString() {
-    return 'ChatModel(id: $id, title: $title, pictureUrl: $pictureUrl, ownerId: $ownerId, admins: $admins, members: $members, messages: $messages, isTypings: $isTypings, type: $type)';
+    return 'ChatModel(id: $id, title: $title, pictureUrl: $pictureUrl, owner: $owner, admins: $admins, members: $members, messages: $messages, isTypings: $isTypings, lastMessage: $lastMessage, type: $type)';
   }
 
   @override
@@ -287,12 +303,14 @@ class _$ChatModelImpl implements _ChatModel {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.pictureUrl, pictureUrl) ||
                 other.pictureUrl == pictureUrl) &&
-            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
+            (identical(other.owner, owner) || other.owner == owner) &&
             const DeepCollectionEquality().equals(other._admins, _admins) &&
             const DeepCollectionEquality().equals(other._members, _members) &&
             const DeepCollectionEquality().equals(other._messages, _messages) &&
             const DeepCollectionEquality()
                 .equals(other._isTypings, _isTypings) &&
+            (identical(other.lastMessage, lastMessage) ||
+                other.lastMessage == lastMessage) &&
             (identical(other.type, type) || other.type == type));
   }
 
@@ -303,11 +321,12 @@ class _$ChatModelImpl implements _ChatModel {
       id,
       title,
       pictureUrl,
-      ownerId,
+      owner,
       const DeepCollectionEquality().hash(_admins),
       const DeepCollectionEquality().hash(_members),
       const DeepCollectionEquality().hash(_messages),
       const DeepCollectionEquality().hash(_isTypings),
+      lastMessage,
       type);
 
   /// Create a copy of ChatModel
@@ -329,13 +348,14 @@ class _$ChatModelImpl implements _ChatModel {
 abstract class _ChatModel implements ChatModel {
   const factory _ChatModel(
       {required final String id,
-      required final String title,
+      final String? title,
       final String? pictureUrl,
-      required final String ownerId,
+      required final String owner,
       required final List<String> admins,
       required final List<String> members,
       final List<String> messages,
       final List<String> isTypings,
+      final String? lastMessage,
       required final ChatType type}) = _$ChatModelImpl;
 
   factory _ChatModel.fromJson(Map<String, dynamic> json) =
@@ -344,11 +364,11 @@ abstract class _ChatModel implements ChatModel {
   @override
   String get id;
   @override
-  String get title;
+  String? get title;
   @override
   String? get pictureUrl;
   @override
-  String get ownerId;
+  String get owner;
   @override
   List<String> get admins;
   @override
@@ -357,6 +377,8 @@ abstract class _ChatModel implements ChatModel {
   List<String> get messages;
   @override
   List<String> get isTypings;
+  @override
+  String? get lastMessage;
   @override
   ChatType get type;
 

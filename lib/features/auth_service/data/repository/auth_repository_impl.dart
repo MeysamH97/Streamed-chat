@@ -13,39 +13,18 @@ class AuthRepositoryImpl extends AuthRepository {
   AuthRepositoryImpl(this.authServiceProvider);
 
   @override
-  Future<DataState<UserModelEntity>> fetchCurrentUserData(String userId) async {
-    try {
-      String token = await _getToken() ?? '';
-      Response response = await authServiceProvider.checkToken(userId, token);
-
-      if (response.data == null) {
-        return DataFailed('Please check your connection');
-      }
-
-      if (response.data['error'] != null) {
-        return DataFailed('error: ${response.data['error']}');
-      }
-
-      Response newResponse =
-          await authServiceProvider.getUserData(userId, token);
-      CurrentUserEntity currentUserData =  currentUserToEntity(
-          CurrentUserModel.fromJson(newResponse.data));
-
-      return DataSuccess(currentUserData);
-    } catch (e) {
-      return DataFailed('Error: ${e.toString()}');
-    }
+  Stream<DataState<CurrentUserEntity>> fetchCurrentUserData(String userId)  {
+    return authServiceProvider.watchCurrentUserData(userId);
   }
 
   @override
-  Future<DataState<UserModelEntity>> fetchUserDataWithSignIn(
-      String email, String password) async {
+  Future<DataState<CurrentUserEntity>> fetchUserDataWithSignIn(String email, String password) async {
     try {
       Response response =
           await authServiceProvider.signInWithEmailAndPassword(email, password);
 
       if (response.data != null) {
-        CurrentUserEntity currentUserData = await currentUserToEntity(
+        CurrentUserEntity currentUserData = currentUserToEntity(
             CurrentUserModel.fromJson(response.data['data']));
 
         final token = response.data['token'];
@@ -63,8 +42,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<DataState<UserModelEntity>> fetchUserDataWithSignUp(
-      String email, String password) async {
+  Future<DataState<CurrentUserEntity>> fetchUserDataWithSignUp(String email, String password) async {
     try {
       print('Send request for user data');
       Response response =
@@ -92,9 +70,4 @@ class AuthRepositoryImpl extends AuthRepository {
     await prefs.setString('auth_token', token);
   }
 
-  // بازیابی توکن از SharedPreferences
-  Future<String?> _getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('auth_token');
-  }
 }

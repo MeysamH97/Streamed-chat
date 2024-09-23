@@ -21,4 +21,5 @@ class CurrentUserModel with _$CurrentUserModel {
 
   factory CurrentUserModel.fromJson(Map<String, dynamic> json) =>
       _$CurrentUserModelFromJson(json);
+
 }

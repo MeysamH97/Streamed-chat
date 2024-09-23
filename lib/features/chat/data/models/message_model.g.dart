@@ -11,7 +11,7 @@ _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       sender: json['sender'] as String,
       content: json['content'] as String,
-      time: const TimestampConverter().fromJson(json['time'] as Object),
+      time: CustomTimeModel.fromJson(json['time'] as Map<String, dynamic>),
       type: $enumDecode(_$MessageTypeEnumMap, json['type']),
     );
 
@@ -20,7 +20,7 @@ Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
       'id': instance.id,
       'sender': instance.sender,
       'content': instance.content,
-      'time': const TimestampConverter().toJson(instance.time),
+      'time': instance.time,
       'type': _$MessageTypeEnumMap[instance.type]!,
     };
 

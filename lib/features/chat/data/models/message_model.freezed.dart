@@ -23,8 +23,7 @@ mixin _$MessageModel {
   String get id => throw _privateConstructorUsedError;
   String get sender => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
-  @TimestampConverter()
-  Timestamp get time => throw _privateConstructorUsedError;
+  CustomTimeModel get time => throw _privateConstructorUsedError;
   MessageType get type => throw _privateConstructorUsedError;
 
   /// Serializes this MessageModel to a JSON map.
@@ -47,8 +46,10 @@ abstract class $MessageModelCopyWith<$Res> {
       {String id,
       String sender,
       String content,
-      @TimestampConverter() Timestamp time,
+      CustomTimeModel time,
       MessageType type});
+
+  $CustomTimeModelCopyWith<$Res> get time;
 }
 
 /// @nodoc
@@ -88,12 +89,22 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
       time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as Timestamp,
+              as CustomTimeModel,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as MessageType,
     ) as $Val);
+  }
+
+  /// Create a copy of MessageModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CustomTimeModelCopyWith<$Res> get time {
+    return $CustomTimeModelCopyWith<$Res>(_value.time, (value) {
+      return _then(_value.copyWith(time: value) as $Val);
+    });
   }
 }
 
@@ -109,8 +120,11 @@ abstract class _$$MessageModelImplCopyWith<$Res>
       {String id,
       String sender,
       String content,
-      @TimestampConverter() Timestamp time,
+      CustomTimeModel time,
       MessageType type});
+
+  @override
+  $CustomTimeModelCopyWith<$Res> get time;
 }
 
 /// @nodoc
@@ -148,7 +162,7 @@ class __$$MessageModelImplCopyWithImpl<$Res>
       time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as Timestamp,
+              as CustomTimeModel,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -164,7 +178,7 @@ class _$MessageModelImpl implements _MessageModel {
       {required this.id,
       required this.sender,
       required this.content,
-      @TimestampConverter() required this.time,
+      required this.time,
       required this.type});
 
   factory _$MessageModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -177,8 +191,7 @@ class _$MessageModelImpl implements _MessageModel {
   @override
   final String content;
   @override
-  @TimestampConverter()
-  final Timestamp time;
+  final CustomTimeModel time;
   @override
   final MessageType type;
 
@@ -224,7 +237,7 @@ abstract class _MessageModel implements MessageModel {
       {required final String id,
       required final String sender,
       required final String content,
-      @TimestampConverter() required final Timestamp time,
+      required final CustomTimeModel time,
       required final MessageType type}) = _$MessageModelImpl;
 
   factory _MessageModel.fromJson(Map<String, dynamic> json) =
@@ -237,8 +250,7 @@ abstract class _MessageModel implements MessageModel {
   @override
   String get content;
   @override
-  @TimestampConverter()
-  Timestamp get time;
+  CustomTimeModel get time;
   @override
   MessageType get type;
 

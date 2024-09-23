@@ -9,9 +9,9 @@ part of 'chat_model.dart';
 _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
     _$ChatModelImpl(
       id: json['id'] as String,
-      title: json['title'] as String,
+      title: json['title'] as String?,
       pictureUrl: json['pictureUrl'] as String?,
-      ownerId: json['ownerId'] as String,
+      owner: json['owner'] as String,
       admins:
           (json['admins'] as List<dynamic>).map((e) => e as String).toList(),
       members:
@@ -24,6 +24,7 @@ _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      lastMessage: json['lastMessage'] as String?,
       type: $enumDecode(_$ChatTypeEnumMap, json['type']),
     );
 
@@ -32,11 +33,12 @@ Map<String, dynamic> _$$ChatModelImplToJson(_$ChatModelImpl instance) =>
       'id': instance.id,
       'title': instance.title,
       'pictureUrl': instance.pictureUrl,
-      'ownerId': instance.ownerId,
+      'owner': instance.owner,
       'admins': instance.admins,
       'members': instance.members,
       'messages': instance.messages,
       'isTypings': instance.isTypings,
+      'lastMessage': instance.lastMessage,
       'type': _$ChatTypeEnumMap[instance.type]!,
     };
 

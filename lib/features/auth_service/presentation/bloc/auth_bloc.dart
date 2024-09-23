@@ -34,27 +34,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (event, emit) async {
         if (event.userId == null || event.userId == '') {
           emit(
-              state.copyWith(newAuthStatus: AuthError('No User had Loged in')));
+              state.copyWith(newAuthStatus: AuthError('No User had Logged in')));
         } else {
-          DataState dataState = await authCheckUseCase(event.userId!);
+          await for (final dataState in authCheckUseCase(event.userId!)) {
+            if (dataState is DataSuccess) {
+              emit(state.copyWith(
+                  newAuthStatus: AuthCompleted(dataState.data!)));
+            }
 
-          if (dataState is DataSuccess) {
-            emit(state.copyWith(newAuthStatus: AuthCompleted(dataState.data)));
-          }
-
-          if (dataState is DataFailed) {
-            emit(state.copyWith(newAuthStatus: AuthError(dataState.error!)));
+            if (dataState is DataFailed) {
+              emit(state.copyWith(newAuthStatus: AuthError(dataState.error!)));
+            }
           }
         }
       },
     );
 
     on<AuthenticationWithEmailAndPasswordEvent>((event, emit) async {
-      // emit(
-      //   state.copyWith(
-      //     newAuthStatus: AuthError('Please Login or SignUp'),
-      //   ),
-      // );
 
       DataState dataState = await signInWithEmailAndPasswordUseCase(
           {'email': event.email, 'password': event.password});

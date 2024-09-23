@@ -1,9 +1,10 @@
 import 'package:chat_by_socket_samle/core/resources/custom_sizes.dart';
-import 'package:chat_by_socket_samle/features/chat/presentation/screens/chat.dart';
+import 'package:chat_by_socket_samle/features/chat/presentation/screens/private_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../locator.dart';
+import '../../../chat/presentation/bloc/chat_bloc/chat_bloc.dart';
 import '../bloc/contact_bloc/contact_bloc.dart';
 import '../bloc/contact_bloc/get_contacts_data_status.dart';
 
@@ -40,8 +41,13 @@ class _UserTileState extends State<UserTile> {
               context,
               MaterialPageRoute(
                 builder: (context) => BlocProvider<ContactBloc>(
-                  create: (context) => ContactBloc(getContactsDataUseCase: locator()),
-                  child: PrivateChat(otherUser: user),
+                  create: (context) =>
+                      ContactBloc(getContactsDataUseCase: locator()),
+                  child: BlocProvider<ChatBloc>(
+                    create: (context) =>
+                        ChatBloc(getChatsDataUseCase: locator(), sendMessagesUseCase: locator()),
+                    child: PrivateChat(otherUser: user),
+                  ),
                 ),
               ),
             ),

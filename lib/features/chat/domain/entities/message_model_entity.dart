@@ -1,5 +1,4 @@
 
-import 'package:chat_by_socket_samle/features/auth_service/domain/entities/user_model_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import '../../data/models/message_model.dart';
